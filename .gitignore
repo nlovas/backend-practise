@@ -5,3 +5,5 @@
 !.vscode/extensions.json
 *.code-workspace
 api/config.js
+api/node_modules
+frontend/node_modules
