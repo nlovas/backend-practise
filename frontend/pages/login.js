@@ -1,10 +1,15 @@
 import Header from "../components/Header";
 
-export default function Login() {
-  return (
-    <div>
-      <Header />
-      <p>this is the login page</p>
-    </div>
-  );
+class Login extends React.Component {
+  //constructor(){}
+  render() {
+    return (
+      <div>
+        <Header />
+        <p>this is the login page</p>
+      </div>
+    );
+  }
 }
+
+export default Login;
