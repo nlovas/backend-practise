@@ -19373,8 +19373,7 @@ var Signup = /*#__PURE__*/function (_React$Component) {
         },
         validationSchema: yup__WEBPACK_IMPORTED_MODULE_8__["object"]().shape({
           username: yup__WEBPACK_IMPORTED_MODULE_8__["string"]().required("Required").min(3, "Username must be at least 3 characters long").max(20, "Username is too long").matches(/^[A-Za-z0-9\-\_.]*$/, "Username can only use letters, numbers, or special characters(-_.)"),
-          password: yup__WEBPACK_IMPORTED_MODULE_8__["string"]().required("Required").min(6, "Password must be at least 6 characters long").max(20, "Password is too long").matches(/(?=(.*[0-9]))(?=.*[\!@#$%^&*\-_.])(?=.*[a-z])(?=(.*[A-Z]))(?=(.*))/, "Password must contain: one or more lowercase letters, uppercase letters, a number, and a symbol(!@#$%^&*-_.) with no spaces"),
-
+          password: yup__WEBPACK_IMPORTED_MODULE_8__["string"]().required("Required").min(6, "Password must be at least 6 characters long").max(20, "Password is too long").matches(/(?=(.*[0-9]))(?=.*[\!@#$%^&*\-_.])(?=.*[a-z])(?=(.*[A-Z]))(?=(.*))/, "Password must contain: one or more lowercase letters, uppercase letters, a number, and a symbol(!@#$%^&*-_.)")
           /*
           (?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*\-\_])
           (?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*\-\_])\w+ from regexer
@@ -19395,161 +19394,33 @@ var Signup = /*#__PURE__*/function (_React$Component) {
           should pass:
           passWORD123!
           pASSw@rd222
-                Passwords to test:
-              password
-              PASSWORD
-              123456
-              @@!!!@@@--@!
-                pass!!!!!!
-              password1234
-              PASS---WORD
-              123456***
-              PASSWORD12345
-              passWORD
-                PASSword12
-              passWORD!!
-              PASSW123RD!
-              password123!
-                should pass:
-              passWORD123!
-              https://regexr.com/
-            https://stackoverflow.com/questions/5887678/alphanumeric-dash-and-underscore-but-no-spaces-regular-expression-check-javascr
-            https://www.thepolyglotdeveloper.com/2015/05/use-regex-to-test-password-strength-in-javascript/
-            */
+            Passwords to test:
+          password
+          PASSWORD
+          123456
+          @@!!!@@@--@!
+            pass!!!!!!
+          password1234
+          PASS---WORD
+          123456***
+          PASSWORD12345
+          passWORD
+            PASSword12
+          passWORD!!
+          PASSW123RD!
+          password123!
+            should pass:
+          passWORD123!
+          https://regexr.com/
+          https://stackoverflow.com/questions/5887678/alphanumeric-dash-and-underscore-but-no-spaces-regular-expression-check-javascr
+          https://www.thepolyglotdeveloper.com/2015/05/use-regex-to-test-password-strength-in-javascript/
+          */
+          ,
           confirmPassword: yup__WEBPACK_IMPORTED_MODULE_8__["string"]().required("Required").oneOf([yup__WEBPACK_IMPORTED_MODULE_8__["ref"]("password"), null], "Passwords do not match"),
           email: yup__WEBPACK_IMPORTED_MODULE_8__["string"]().required("Required").email("Must be a valid email")
         }),
         onSubmit: function onSubmit(fields) {
           alert("SUCCESS!! :-)\n\n" + JSON.stringify(fields, null, 4));
-        },
-        render: function render(_ref) {
-          var errors = _ref.errors,
-              status = _ref.status,
-              touched = _ref.touched;
-          return __jsx(formik__WEBPACK_IMPORTED_MODULE_7__["Form"], {
-            __self: _this,
-            __source: {
-              fileName: _jsxFileName,
-              lineNumber: 122,
-              columnNumber: 15
-            }
-          }, __jsx("label", {
-            __self: _this,
-            __source: {
-              fileName: _jsxFileName,
-              lineNumber: 123,
-              columnNumber: 17
-            }
-          }, "First, choose a unique username"), __jsx(formik__WEBPACK_IMPORTED_MODULE_7__["Field"], {
-            name: "username",
-            type: "text",
-            className: "form-control" + (errors.username && touched.username ? " is-invalid" : ""),
-            __self: _this,
-            __source: {
-              fileName: _jsxFileName,
-              lineNumber: 124,
-              columnNumber: 17
-            }
-          }), __jsx(formik__WEBPACK_IMPORTED_MODULE_7__["ErrorMessage"], {
-            name: "username",
-            component: "div",
-            className: "invalid-feedback",
-            __self: _this,
-            __source: {
-              fileName: _jsxFileName,
-              lineNumber: 132,
-              columnNumber: 17
-            }
-          }), __jsx("label", {
-            __self: _this,
-            __source: {
-              fileName: _jsxFileName,
-              lineNumber: 137,
-              columnNumber: 17
-            }
-          }, "Enter a password (must contain min. 6 characters)"), __jsx(formik__WEBPACK_IMPORTED_MODULE_7__["Field"], {
-            name: "password",
-            type: "text",
-            className: "form-control" + (errors.password && touched.password ? " is-invalid" : ""),
-            __self: _this,
-            __source: {
-              fileName: _jsxFileName,
-              lineNumber: 138,
-              columnNumber: 17
-            }
-          }), __jsx(formik__WEBPACK_IMPORTED_MODULE_7__["ErrorMessage"], {
-            name: "password",
-            component: "div",
-            className: "invalid-feedback",
-            __self: _this,
-            __source: {
-              fileName: _jsxFileName,
-              lineNumber: 146,
-              columnNumber: 17
-            }
-          }), __jsx("label", {
-            __self: _this,
-            __source: {
-              fileName: _jsxFileName,
-              lineNumber: 152,
-              columnNumber: 17
-            }
-          }, "Please confirm your password"), __jsx(formik__WEBPACK_IMPORTED_MODULE_7__["Field"], {
-            name: "confirmPassword",
-            type: "text",
-            className: "form-control" + (errors.confirmPassword && touched.confirmPassword ? " is-invalid" : ""),
-            __self: _this,
-            __source: {
-              fileName: _jsxFileName,
-              lineNumber: 153,
-              columnNumber: 17
-            }
-          }), __jsx(formik__WEBPACK_IMPORTED_MODULE_7__["ErrorMessage"], {
-            name: "confirmPassword",
-            component: "div",
-            className: "invalid-feedback",
-            __self: _this,
-            __source: {
-              fileName: _jsxFileName,
-              lineNumber: 163,
-              columnNumber: 17
-            }
-          }), __jsx("label", {
-            __self: _this,
-            __source: {
-              fileName: _jsxFileName,
-              lineNumber: 168,
-              columnNumber: 17
-            }
-          }, "Enter your email"), __jsx(formik__WEBPACK_IMPORTED_MODULE_7__["Field"], {
-            name: "email",
-            type: "text",
-            className: "form-control" + (errors.email && touched.email ? " is-invalid" : ""),
-            __self: _this,
-            __source: {
-              fileName: _jsxFileName,
-              lineNumber: 169,
-              columnNumber: 17
-            }
-          }), __jsx(formik__WEBPACK_IMPORTED_MODULE_7__["ErrorMessage"], {
-            name: "email",
-            component: "div",
-            className: "invalid-feedback",
-            __self: _this,
-            __source: {
-              fileName: _jsxFileName,
-              lineNumber: 177,
-              columnNumber: 17
-            }
-          }), __jsx("button", {
-            type: "submit",
-            __self: _this,
-            __source: {
-              fileName: _jsxFileName,
-              lineNumber: 182,
-              columnNumber: 17
-            }
-          }, "Register"));
         },
         __self: this,
         __source: {
@@ -19557,6 +19428,132 @@ var Signup = /*#__PURE__*/function (_React$Component) {
           lineNumber: 40,
           columnNumber: 11
         }
+      }, //  render={({ errors, status, touched }) => (
+      function (props) {
+        return __jsx(formik__WEBPACK_IMPORTED_MODULE_7__["Form"], {
+          __self: _this,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 123,
+            columnNumber: 15
+          }
+        }, __jsx("label", {
+          __self: _this,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 124,
+            columnNumber: 17
+          }
+        }, "First, choose a unique username"), __jsx(formik__WEBPACK_IMPORTED_MODULE_7__["Field"], {
+          name: "username",
+          type: "text",
+          className: "form-control" + (props.errors.username && props.touched.username ? " is-invalid" : ""),
+          __self: _this,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 125,
+            columnNumber: 17
+          }
+        }), __jsx(formik__WEBPACK_IMPORTED_MODULE_7__["ErrorMessage"], {
+          name: "username",
+          component: "div",
+          className: "invalid-feedback",
+          __self: _this,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 135,
+            columnNumber: 17
+          }
+        }), __jsx("label", {
+          __self: _this,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 140,
+            columnNumber: 17
+          }
+        }, "Enter a password (must contain min. 6 characters)"), __jsx(formik__WEBPACK_IMPORTED_MODULE_7__["Field"], {
+          name: "password",
+          type: "text",
+          className: "form-control" + (props.errors.password && props.touched.password ? " is-invalid" : ""),
+          __self: _this,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 141,
+            columnNumber: 17
+          }
+        }), __jsx(formik__WEBPACK_IMPORTED_MODULE_7__["ErrorMessage"], {
+          name: "password",
+          component: "div",
+          className: "invalid-feedback",
+          __self: _this,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 151,
+            columnNumber: 17
+          }
+        }), __jsx("label", {
+          __self: _this,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 157,
+            columnNumber: 17
+          }
+        }, "Please confirm your password"), __jsx(formik__WEBPACK_IMPORTED_MODULE_7__["Field"], {
+          name: "confirmPassword",
+          type: "text",
+          className: "form-control" + (props.errors.confirmPassword && props.touched.confirmPassword ? " is-invalid" : ""),
+          __self: _this,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 158,
+            columnNumber: 17
+          }
+        }), __jsx(formik__WEBPACK_IMPORTED_MODULE_7__["ErrorMessage"], {
+          name: "confirmPassword",
+          component: "div",
+          className: "invalid-feedback",
+          __self: _this,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 169,
+            columnNumber: 17
+          }
+        }), __jsx("label", {
+          __self: _this,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 174,
+            columnNumber: 17
+          }
+        }, "Enter your email"), __jsx(formik__WEBPACK_IMPORTED_MODULE_7__["Field"], {
+          name: "email",
+          type: "text",
+          className: "form-control" + (props.errors.email && props.touched.email ? " is-invalid" : ""),
+          __self: _this,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 175,
+            columnNumber: 17
+          }
+        }), __jsx(formik__WEBPACK_IMPORTED_MODULE_7__["ErrorMessage"], {
+          name: "email",
+          component: "div",
+          className: "invalid-feedback",
+          __self: _this,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 185,
+            columnNumber: 17
+          }
+        }), __jsx("button", {
+          type: "submit",
+          __self: _this,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 190,
+            columnNumber: 17
+          }
+        }, "Register"));
       })));
     }
   }]);

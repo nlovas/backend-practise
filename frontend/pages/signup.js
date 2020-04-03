@@ -59,9 +59,8 @@ class Signup extends React.Component {
                 .max(20, "Password is too long")
                 .matches(
                   /(?=(.*[0-9]))(?=.*[\!@#$%^&*\-_.])(?=.*[a-z])(?=(.*[A-Z]))(?=(.*))/,
-                  "Password must contain: one or more lowercase letters, uppercase letters, a number, and a symbol(!@#$%^&*-_.) with no spaces"
-                ),
-              /*
+                  "Password must contain: one or more lowercase letters, uppercase letters, a number, and a symbol(!@#$%^&*-_.)"
+                ) /*
 (?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*\-\_])
 (?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*\-\_])\w+ from regexer
 
@@ -107,7 +106,7 @@ pASSw@rd222
                 https://regexr.com/
                 https://stackoverflow.com/questions/5887678/alphanumeric-dash-and-underscore-but-no-spaces-regular-expression-check-javascr
                 https://www.thepolyglotdeveloper.com/2015/05/use-regex-to-test-password-strength-in-javascript/
-                */
+                */,
               confirmPassword: Yup.string()
                 .required("Required")
                 .oneOf([Yup.ref("password"), null], "Passwords do not match"),
@@ -118,7 +117,9 @@ pASSw@rd222
             onSubmit={fields => {
               alert("SUCCESS!! :-)\n\n" + JSON.stringify(fields, null, 4));
             }}
-            render={({ errors, status, touched }) => (
+          >
+            {//  render={({ errors, status, touched }) => (
+            props => (
               <Form>
                 <label>First, choose a unique username</label>
                 <Field
@@ -126,7 +127,9 @@ pASSw@rd222
                   type="text"
                   className={
                     "form-control" +
-                    (errors.username && touched.username ? " is-invalid" : "")
+                    (props.errors.username && props.touched.username
+                      ? " is-invalid"
+                      : "")
                   }
                 />
                 <ErrorMessage
@@ -140,7 +143,9 @@ pASSw@rd222
                   type="text"
                   className={
                     "form-control" +
-                    (errors.password && touched.password ? " is-invalid" : "")
+                    (props.errors.password && props.touched.password
+                      ? " is-invalid"
+                      : "")
                   }
                 />
                 <ErrorMessage
@@ -155,7 +160,8 @@ pASSw@rd222
                   type="text"
                   className={
                     "form-control" +
-                    (errors.confirmPassword && touched.confirmPassword
+                    (props.errors.confirmPassword &&
+                    props.touched.confirmPassword
                       ? " is-invalid"
                       : "")
                   }
@@ -171,7 +177,9 @@ pASSw@rd222
                   type="text"
                   className={
                     "form-control" +
-                    (errors.email && touched.email ? " is-invalid" : "")
+                    (props.errors.email && props.touched.email
+                      ? " is-invalid"
+                      : "")
                   }
                 />
                 <ErrorMessage
@@ -182,7 +190,7 @@ pASSw@rd222
                 <button type="submit">Register</button>
               </Form>
             )}
-          />
+          </Formik>
         </div>
       </div>
     );
