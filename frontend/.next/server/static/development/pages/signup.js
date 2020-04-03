@@ -88,7 +88,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1949,8 +1949,50 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         email: ""
       },
       validationSchema: yup__WEBPACK_IMPORTED_MODULE_3__["object"]().shape({
-        username: yup__WEBPACK_IMPORTED_MODULE_3__["string"]().required("Required"),
-        password: yup__WEBPACK_IMPORTED_MODULE_3__["string"]().required("Required").min(6, "Password must be at least 6 characters long"),
+        username: yup__WEBPACK_IMPORTED_MODULE_3__["string"]().required("Required").min(3, "Username must be at least 3 characters long").max(20, "Username is too long").matches(/^[A-Za-z0-9\-\_.]*$/, "Username can only use letters, numbers, or special characters(-_.)"),
+        password: yup__WEBPACK_IMPORTED_MODULE_3__["string"]().required("Required").min(6, "Password must be at least 6 characters long").max(20, "Password is too long").matches(/(?=(.*[0-9]))(?=.*[\!@#$%^&*\-_.])(?=.*[a-z])(?=(.*[A-Z]))(?=(.*))/, "Password must contain: one or more lowercase letters, uppercase letters, a number, and a symbol(!@#$%^&*-_.) with no spaces"),
+
+        /*
+        (?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*\-\_])
+        (?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*\-\_])\w+ from regexer
+        password
+        PASSWORD
+        123456
+        @@!!!@@@--@!
+        pass!!!!!!
+        password1234
+        PASS---WORD
+        123456***
+        PASSWORD12345
+        passWORD
+        PASSword12
+        passWORD!!
+        PASSW123RD!
+        password123!
+        should pass:
+        passWORD123!
+        pASSw@rd222
+              Passwords to test:
+            password
+            PASSWORD
+            123456
+            @@!!!@@@--@!
+              pass!!!!!!
+            password1234
+            PASS---WORD
+            123456***
+            PASSWORD12345
+            passWORD
+              PASSword12
+            passWORD!!
+            PASSW123RD!
+            password123!
+              should pass:
+            passWORD123!
+            https://regexr.com/
+          https://stackoverflow.com/questions/5887678/alphanumeric-dash-and-underscore-but-no-spaces-regular-expression-check-javascr
+          https://www.thepolyglotdeveloper.com/2015/05/use-regex-to-test-password-strength-in-javascript/
+          */
         confirmPassword: yup__WEBPACK_IMPORTED_MODULE_3__["string"]().required("Required").oneOf([yup__WEBPACK_IMPORTED_MODULE_3__["ref"]("password"), null], "Passwords do not match"),
         email: yup__WEBPACK_IMPORTED_MODULE_3__["string"]().required("Required").email("Must be a valid email")
       }),
@@ -1965,14 +2007,14 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 63,
+          lineNumber: 122,
           columnNumber: 15
         }
       }, __jsx("label", {
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 64,
+          lineNumber: 123,
           columnNumber: 17
         }
       }, "First, choose a unique username"), __jsx(formik__WEBPACK_IMPORTED_MODULE_2__["Field"], {
@@ -1982,7 +2024,7 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 65,
+          lineNumber: 124,
           columnNumber: 17
         }
       }), __jsx(formik__WEBPACK_IMPORTED_MODULE_2__["ErrorMessage"], {
@@ -1992,14 +2034,14 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 73,
+          lineNumber: 132,
           columnNumber: 17
         }
       }), __jsx("label", {
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 78,
+          lineNumber: 137,
           columnNumber: 17
         }
       }, "Enter a password (must contain min. 6 characters)"), __jsx(formik__WEBPACK_IMPORTED_MODULE_2__["Field"], {
@@ -2009,7 +2051,7 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 79,
+          lineNumber: 138,
           columnNumber: 17
         }
       }), __jsx(formik__WEBPACK_IMPORTED_MODULE_2__["ErrorMessage"], {
@@ -2019,14 +2061,14 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 87,
+          lineNumber: 146,
           columnNumber: 17
         }
       }), __jsx("label", {
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 93,
+          lineNumber: 152,
           columnNumber: 17
         }
       }, "Please confirm your password"), __jsx(formik__WEBPACK_IMPORTED_MODULE_2__["Field"], {
@@ -2036,7 +2078,7 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 94,
+          lineNumber: 153,
           columnNumber: 17
         }
       }), __jsx(formik__WEBPACK_IMPORTED_MODULE_2__["ErrorMessage"], {
@@ -2046,14 +2088,14 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 104,
+          lineNumber: 163,
           columnNumber: 17
         }
       }), __jsx("label", {
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 109,
+          lineNumber: 168,
           columnNumber: 17
         }
       }, "Enter your email"), __jsx(formik__WEBPACK_IMPORTED_MODULE_2__["Field"], {
@@ -2063,7 +2105,7 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 110,
+          lineNumber: 169,
           columnNumber: 17
         }
       }), __jsx(formik__WEBPACK_IMPORTED_MODULE_2__["ErrorMessage"], {
@@ -2073,7 +2115,7 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 118,
+          lineNumber: 177,
           columnNumber: 17
         }
       }), __jsx("button", {
@@ -2081,7 +2123,7 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 123,
+          lineNumber: 182,
           columnNumber: 17
         }
       }, "Register")),
@@ -2097,76 +2139,10 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Signup);
-/*
-<form>
-            <label>
-              First, choose a unique username
-              <input
-                type="text"
-                name="username"
-                value={this.state.usernamevalue}
-                onChange={this.usernameChange}
-              ></input>
-            </label>
-            <label>
-              Enter a password (must contain min. 6 characters)
-              <input
-                type="text"
-                name="password"
-                value={this.state.pwvalue}
-                onChange={this.pwChange}
-              ></input>
-            </label>
-            <label>
-              Enter your email
-              <input
-                type="text"
-                name="email"
-                value={this.state.emailvalue}
-                onChange={this.emailChange}
-              ></input>
-            </label>
-            <input type="submit" value="Submit"></input>
-          </form>
-
-
-
-
-           <form onSubmit={formik.handleSubmit}>
-            <label>
-              First, choose a unique username
-              <input
-                type="text"
-                name="username"
-                value={formik.values.username}
-                onChange={formik.handleChange}
-              ></input>
-            </label>
-            <label>
-              Enter a password (must contain min. 6 characters)
-              <input
-                type="text"
-                name="password"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-              ></input>
-            </label>
-            <label>
-              Enter your email
-              <input
-                type="text"
-                name="email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-              ></input>
-            </label>
-            <input type="submit"></input>
-          </form>
-*/
 
 /***/ }),
 
-/***/ 5:
+/***/ 4:
 /*!*******************************!*\
   !*** multi ./pages/signup.js ***!
   \*******************************/

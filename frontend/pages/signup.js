@@ -45,10 +45,69 @@ class Signup extends React.Component {
               email: ""
             }}
             validationSchema={Yup.object().shape({
-              username: Yup.string().required("Required"),
+              username: Yup.string()
+                .required("Required")
+                .min(3, "Username must be at least 3 characters long")
+                .max(20, "Username is too long")
+                .matches(
+                  /^[A-Za-z0-9\-\_.]*$/,
+                  "Username can only use letters, numbers, or special characters(-_.)"
+                ),
               password: Yup.string()
                 .required("Required")
-                .min(6, "Password must be at least 6 characters long"),
+                .min(6, "Password must be at least 6 characters long")
+                .max(20, "Password is too long")
+                .matches(
+                  /(?=(.*[0-9]))(?=.*[\!@#$%^&*\-_.])(?=.*[a-z])(?=(.*[A-Z]))(?=(.*))/,
+                  "Password must contain: one or more lowercase letters, uppercase letters, a number, and a symbol(!@#$%^&*-_.) with no spaces"
+                ),
+              /*
+(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*\-\_])
+(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*\-\_])\w+ from regexer
+
+password
+PASSWORD
+123456
+@@!!!@@@--@!
+pass!!!!!!
+password1234
+PASS---WORD
+123456***
+PASSWORD12345
+passWORD
+PASSword12
+passWORD!!
+PASSW123RD!
+password123!
+should pass:
+passWORD123!
+pASSw@rd222
+
+                  Passwords to test:
+                  password
+                  PASSWORD
+                  123456
+                  @@!!!@@@--@!
+
+                  pass!!!!!!
+                  password1234
+                  PASS---WORD
+                  123456***
+                  PASSWORD12345
+                  passWORD
+
+                  PASSword12
+                  passWORD!!
+                  PASSW123RD!
+                  password123!
+
+                  should pass:
+                  passWORD123!
+
+                https://regexr.com/
+                https://stackoverflow.com/questions/5887678/alphanumeric-dash-and-underscore-but-no-spaces-regular-expression-check-javascr
+                https://www.thepolyglotdeveloper.com/2015/05/use-regex-to-test-password-strength-in-javascript/
+                */
               confirmPassword: Yup.string()
                 .required("Required")
                 .oneOf([Yup.ref("password"), null], "Passwords do not match"),
@@ -131,69 +190,3 @@ class Signup extends React.Component {
 }
 
 export default Signup;
-/*
-<form>
-            <label>
-              First, choose a unique username
-              <input
-                type="text"
-                name="username"
-                value={this.state.usernamevalue}
-                onChange={this.usernameChange}
-              ></input>
-            </label>
-            <label>
-              Enter a password (must contain min. 6 characters)
-              <input
-                type="text"
-                name="password"
-                value={this.state.pwvalue}
-                onChange={this.pwChange}
-              ></input>
-            </label>
-            <label>
-              Enter your email
-              <input
-                type="text"
-                name="email"
-                value={this.state.emailvalue}
-                onChange={this.emailChange}
-              ></input>
-            </label>
-            <input type="submit" value="Submit"></input>
-          </form>
-
-
-
-
-           <form onSubmit={formik.handleSubmit}>
-            <label>
-              First, choose a unique username
-              <input
-                type="text"
-                name="username"
-                value={formik.values.username}
-                onChange={formik.handleChange}
-              ></input>
-            </label>
-            <label>
-              Enter a password (must contain min. 6 characters)
-              <input
-                type="text"
-                name="password"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-              ></input>
-            </label>
-            <label>
-              Enter your email
-              <input
-                type="text"
-                name="email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-              ></input>
-            </label>
-            <input type="submit"></input>
-          </form>
-*/

@@ -35,6 +35,9 @@ To run the frontend, go to /frontend and use the command `npm run dev`
 
 - [Setting up a RESTful API with Node.js and PostgreSQL](https://blog.logrocket.com/setting-up-a-restful-api-with-node-js-and-postgresql-d96d6fc892d8/)
 - [Setting up PostgreSQL on Windows](https://www.microfocus.com/documentation/idol/IDOL_12_0/MediaServer/Guides/html/English/Content/Getting_Started/Configure/_TRN_Set_up_PostgreSQL.htm)
+- [React + Formik - Form Validation Example](https://jasonwatmore.com/post/2019/04/10/react-formik-form-validation-example)
+- [Use RegEx To Test Password Strength In JavaScript](https://www.thepolyglotdeveloper.com/2015/05/use-regex-to-test-password-strength-in-javascript/)
+-
 
 ### Misc Notes:
 
