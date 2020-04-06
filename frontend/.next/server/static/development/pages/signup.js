@@ -1949,7 +1949,17 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         email: ""
       },
       validationSchema: yup__WEBPACK_IMPORTED_MODULE_3__["object"]().shape({
-        username: yup__WEBPACK_IMPORTED_MODULE_3__["string"]().required("Required").min(3, "Username must be at least 3 characters long").max(20, "Username is too long").matches(/^[A-Za-z0-9\-\_.]*$/, "Username can only use letters, numbers, or special characters(-_.)"),
+        username: yup__WEBPACK_IMPORTED_MODULE_3__["string"]().required("Required").min(3, "Username must be at least 3 characters long").max(20, "Username is too long").matches(/^[A-Za-z0-9\-\_.]*$/, "Username can only use letters, numbers, or special characters(-_.)") //check to see if this username already exists
+        .test("checkUsernameExistence", "This username is not available", async value => {
+          window.setTimeout(() => {
+            const errors = {};
+            errors.username = "nce try";
+            return errors;
+          }, 2000);
+          /*return new Promise((resolve, reject) => {
+          
+          })*/
+        }),
         password: yup__WEBPACK_IMPORTED_MODULE_3__["string"]().required("Required").min(6, "Password must be at least 6 characters long").max(20, "Password is too long").matches(/(?=(.*[0-9]))(?=.*[\!@#$%^&*\-_.])(?=.*[a-z])(?=(.*[A-Z]))(?=(.*))/, "Password must contain: one or more lowercase letters, uppercase letters, a number, and a symbol(!@#$%^&*-_.)")
         /*
         (?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*\-\_])
@@ -2005,19 +2015,18 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         lineNumber: 40,
         columnNumber: 11
       }
-    }, //  render={({ errors, status, touched }) => (
-    props => __jsx(formik__WEBPACK_IMPORTED_MODULE_2__["Form"], {
+    }, props => __jsx(formik__WEBPACK_IMPORTED_MODULE_2__["Form"], {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 123,
+        lineNumber: 138,
         columnNumber: 15
       }
     }, __jsx("label", {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 124,
+        lineNumber: 139,
         columnNumber: 17
       }
     }, "First, choose a unique username"), __jsx(formik__WEBPACK_IMPORTED_MODULE_2__["Field"], {
@@ -2027,7 +2036,7 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 125,
+        lineNumber: 140,
         columnNumber: 17
       }
     }), __jsx(formik__WEBPACK_IMPORTED_MODULE_2__["ErrorMessage"], {
@@ -2037,14 +2046,14 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 135,
+        lineNumber: 150,
         columnNumber: 17
       }
     }), __jsx("label", {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 140,
+        lineNumber: 155,
         columnNumber: 17
       }
     }, "Enter a password (must contain min. 6 characters)"), __jsx(formik__WEBPACK_IMPORTED_MODULE_2__["Field"], {
@@ -2054,7 +2063,7 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 141,
+        lineNumber: 156,
         columnNumber: 17
       }
     }), __jsx(formik__WEBPACK_IMPORTED_MODULE_2__["ErrorMessage"], {
@@ -2064,14 +2073,14 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 151,
+        lineNumber: 166,
         columnNumber: 17
       }
     }), __jsx("label", {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 157,
+        lineNumber: 172,
         columnNumber: 17
       }
     }, "Please confirm your password"), __jsx(formik__WEBPACK_IMPORTED_MODULE_2__["Field"], {
@@ -2081,7 +2090,7 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 158,
+        lineNumber: 173,
         columnNumber: 17
       }
     }), __jsx(formik__WEBPACK_IMPORTED_MODULE_2__["ErrorMessage"], {
@@ -2091,14 +2100,14 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 169,
+        lineNumber: 184,
         columnNumber: 17
       }
     }), __jsx("label", {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 174,
+        lineNumber: 189,
         columnNumber: 17
       }
     }, "Enter your email"), __jsx(formik__WEBPACK_IMPORTED_MODULE_2__["Field"], {
@@ -2108,7 +2117,7 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 175,
+        lineNumber: 190,
         columnNumber: 17
       }
     }), __jsx(formik__WEBPACK_IMPORTED_MODULE_2__["ErrorMessage"], {
@@ -2118,7 +2127,7 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 185,
+        lineNumber: 200,
         columnNumber: 17
       }
     }), __jsx("button", {
@@ -2126,7 +2135,7 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 190,
+        lineNumber: 205,
         columnNumber: 17
       }
     }, "Register")))));

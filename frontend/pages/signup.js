@@ -52,6 +52,22 @@ class Signup extends React.Component {
                 .matches(
                   /^[A-Za-z0-9\-\_.]*$/,
                   "Username can only use letters, numbers, or special characters(-_.)"
+                )
+                //check to see if this username already exists
+                .test(
+                  "checkUsernameExistence",
+                  "This username is not available",
+                  async value => {
+                    window.setTimeout(() => {
+                      const errors = {};
+                      errors.username = "nce try";
+                      return errors;
+                    }, 2000);
+
+                    /*return new Promise((resolve, reject) => {
+                    
+                  })*/
+                  }
                 ),
               password: Yup.string()
                 .required("Required")
@@ -118,8 +134,7 @@ pASSw@rd222
               alert("SUCCESS!! :-)\n\n" + JSON.stringify(fields, null, 4));
             }}
           >
-            {//  render={({ errors, status, touched }) => (
-            props => (
+            {props => (
               <Form>
                 <label>First, choose a unique username</label>
                 <Field

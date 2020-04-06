@@ -1,12 +1,12 @@
-const db = require("./config.js");
+const { db } = require("./config.js");
 
 const getUsers = (request, response) => {
   db.any("select * from users")
-    .then(data => {
+    .then((data) => {
       console.log("DATA:", data); // print data;
       response.json(data);
     })
-    .catch(error => {
+    .catch((error) => {
       console.log("ERROR:", error); // print the error;
     })
     .finally(db.$pool.end); // For immediate app exit, shutting down the connection pool
@@ -15,5 +15,5 @@ const getUsers = (request, response) => {
 };
 
 module.exports = {
-  getUsers
+  getUsers,
 };

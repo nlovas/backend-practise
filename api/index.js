@@ -1,13 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const db = require("./queries");
+const { apiConfig } = require("./config");
 const app = express();
-const port = 3000;
 
 app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
-    extended: true
+    extended: true,
   })
 );
 
@@ -17,6 +17,10 @@ app.get("/", (request, response) => {
 
 app.get("/users", db.getUsers);
 
-app.listen(port, () => {
-  console.log(`App running on port ${port}.`);
+// sets port from config file to default unless otherwise specified with env variables
+//port setting problem solved (https://stackoverflow.com/a/18024792) by SO user Ehevutov (https://stackoverflow.com/users/183835/ehevutov)
+app.set("port", process.env.PORT || apiConfig.port);
+
+app.listen(app.get("port"), () => {
+  console.log(`App running on port ${app.get("port")}.`);
 });
