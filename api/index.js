@@ -16,6 +16,7 @@ app.get("/", (request, response) => {
 });
 
 app.get("/users", db.getUsers);
+app.post("/create-user", db.createUser);
 
 // sets port from config file to default unless otherwise specified with env variables
 //port setting problem solved (https://stackoverflow.com/a/18024792) by SO user Ehevutov (https://stackoverflow.com/users/183835/ehevutov)

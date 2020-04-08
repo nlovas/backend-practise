@@ -2,6 +2,9 @@ import Header from "../components/Header";
 
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
+
+const api = "http://localhost:8080";
 
 class Signup extends React.Component {
   constructor(props) {
@@ -31,6 +34,32 @@ class Signup extends React.Component {
     event.preventDefault();
   }*/
 
+  /*
+  Create a new account using the validated information from the form
+  Sends a post request to our backend to create a new user in the db
+  */
+  createNewAccount(data) {
+    //url = api + "/create-user";
+    // console.log("url: ", url);
+    axios({
+      method: "post",
+      url: "http://localhost:8080/create-user",
+      data: {
+        username: data.username,
+        password: data.password,
+        email: data.email,
+        admin: "false",
+      },
+    }).then(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
   render() {
     return (
       <div>
@@ -42,7 +71,7 @@ class Signup extends React.Component {
               username: "",
               password: "",
               confirmPassword: "",
-              email: ""
+              email: "",
             }}
             validationSchema={Yup.object().shape({
               username: Yup.string()
@@ -52,12 +81,12 @@ class Signup extends React.Component {
                 .matches(
                   /^[A-Za-z0-9\-\_.]*$/,
                   "Username can only use letters, numbers, or special characters(-_.)"
-                )
-                //check to see if this username already exists
-                .test(
+                ),
+              //check to see if this username already exists
+              /*.test(
                   "checkUsernameExistence",
                   "This username is not available",
-                  async value => {
+                  async (value) => {
                     window.setTimeout(() => {
                       const errors = {};
                       errors.username = "nce try";
@@ -67,9 +96,8 @@ class Signup extends React.Component {
                     /*return new Promise((resolve, reject) => {
                     
                   })*/
-                  }
-                ),
-              password: Yup.string()
+              /* }
+                )*/ password: Yup.string()
                 .required("Required")
                 .min(6, "Password must be at least 6 characters long")
                 .max(20, "Password is too long")
@@ -128,13 +156,20 @@ pASSw@rd222
                 .oneOf([Yup.ref("password"), null], "Passwords do not match"),
               email: Yup.string()
                 .required("Required")
-                .email("Must be a valid email")
+                .email("Must be a valid email"),
             })}
-            onSubmit={fields => {
-              alert("SUCCESS!! :-)\n\n" + JSON.stringify(fields, null, 4));
+            onSubmit={(fields) => {
+              //  alert("SUCCESS!! :-)\n\n" + JSON.stringify(fields, null, 4));
+              this.createNewAccount(
+                JSON.stringify({
+                  username: fields.username,
+                  password: fields.password,
+                  email: fields.email,
+                })
+              );
             }}
           >
-            {props => (
+            {(props) => (
               <Form>
                 <label>First, choose a unique username</label>
                 <Field
