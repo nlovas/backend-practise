@@ -160,13 +160,11 @@ pASSw@rd222
             })}
             onSubmit={(fields) => {
               //  alert("SUCCESS!! :-)\n\n" + JSON.stringify(fields, null, 4));
-              this.createNewAccount(
-                JSON.stringify({
-                  username: fields.username,
-                  password: fields.password,
-                  email: fields.email,
-                })
-              );
+              this.createNewAccount({
+                username: fields.username,
+                password: fields.password,
+                email: fields.email,
+              });
             }}
           >
             {(props) => (

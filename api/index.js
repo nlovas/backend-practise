@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const db = require("./queries");
 const { apiConfig } = require("./config");
 const app = express();
+const cors = require("cors");
 
 app.use(bodyParser.json());
 app.use(
@@ -10,6 +11,8 @@ app.use(
     extended: true,
   })
 );
+app.use(cors({ origin: "http://localhost:3000" })); //only allow cors requests from here
+app.options("*", cors()); // enable cors preflight across the board
 
 app.get("/", (request, response) => {
   response.json({ info: "Node.js, Express, and Postgres API" });

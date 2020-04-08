@@ -37,7 +37,8 @@ To run the frontend, go to /frontend and use the command `npm run dev`
 - [Setting up PostgreSQL on Windows](https://www.microfocus.com/documentation/idol/IDOL_12_0/MediaServer/Guides/html/English/Content/Getting_Started/Configure/_TRN_Set_up_PostgreSQL.htm)
 - [React + Formik - Form Validation Example](https://jasonwatmore.com/post/2019/04/10/react-formik-form-validation-example)
 - [Use RegEx To Test Password Strength In JavaScript](https://www.thepolyglotdeveloper.com/2015/05/use-regex-to-test-password-strength-in-javascript/)
-- [HOW TO EASILY SET-UP NODE CONFIG FOLLOWING THESE BEST PRACTICES](https://codingsans.com/blog/node-config-best-practices)
+- [How To Easily Set-Up Node Config Following These Best Practises](https://codingsans.com/blog/node-config-best-practices)
+- [Using CORS](https://www.html5rocks.com/en/tutorials/cors/)
 
 ### Misc Notes:
 

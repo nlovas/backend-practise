@@ -15,7 +15,6 @@ const getUsers = (request, response) => {
 };
 
 const createUser = (request, response) => {
-  console.log(request.body.username);
   db.any(
     "insert into users (username, password, email, admin) values ($1,$2,$3,$4)",
     [
@@ -26,7 +25,6 @@ const createUser = (request, response) => {
     ]
   )
     .then((data) => {
-      console.log("data: ", data);
       response.sendStatus(200);
     })
     .catch((error) => {
