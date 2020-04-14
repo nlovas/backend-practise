@@ -30,14 +30,6 @@ app.options("*", cors(corsOptions));
 
 //app.use(cors({ origin: "http://localhost:3000" })); //only allow cors requests from here
 
-app.get("/", (request, response) => {
-  response.json({ info: "Node.js, Express, and Postgres API" });
-});
-
-app.post("/create-user", cors(corsOptions), db.createUser);
-
-app.get("/users", cors(corsOptions), db.getUsers);
-
 // sets port from config file to default unless otherwise specified with env variables
 //port setting problem solved (https://stackoverflow.com/a/18024792) by SO user Ehevutov (https://stackoverflow.com/users/183835/ehevutov)
 app.set("port", process.env.PORT || apiConfig.port);
@@ -45,3 +37,17 @@ app.set("port", process.env.PORT || apiConfig.port);
 app.listen(app.get("port"), () => {
   console.log(`App running on port ${app.get("port")}.`);
 });
+
+// ----------------------- GET REQUESTS ---------------------------
+
+app.get("/", (request, response) => {
+  response.json({ info: "Node.js, Express, and Postgres API" });
+});
+
+app.get("/users", cors(corsOptions), db.getUsers);
+
+app.get("/user/:username", cors(corsOptions), db.checkExistence);
+
+// ------------------------ POST REQUESTS ---------------------------
+
+app.post("/create-user", cors(corsOptions), db.createUser);

@@ -1,5 +1,10 @@
 const { db } = require("./config.js");
 
+// ------------------ GET REQUESTS ---------------------------------------
+
+/*
+Returns a list of all users -- TODO either remove this or change *
+*/
 const getUsers = (request, response) => {
   db.any("select * from users")
     .then((data) => {
@@ -14,6 +19,31 @@ const getUsers = (request, response) => {
   // response.status(200).json(data);
 };
 
+/*
+Returns true/false if a user exists with this username
+*/
+const checkExistence = (request, response) => {
+  console.log(request.params);
+  db.any("select id from users where username = $1", [request.params.username])
+    .then((data) => {
+      console.log("DATA: ", data);
+      if (data.length > 0) {
+        response.json("true");
+      } else {
+        response.json("false");
+      }
+    })
+    .catch((error) => {
+      console.log("An error occurred: ", error);
+      response.status(500).json(error);
+    });
+};
+
+// ----------------- POST REQUESTS -------------------------------
+
+/*
+Create a new user in the DB
+*/
 const createUser = (request, response) => {
   db.any(
     "insert into users (username, password, email, admin) values ($1,$2,$3,$4)",
@@ -38,4 +68,5 @@ const createUser = (request, response) => {
 module.exports = {
   getUsers,
   createUser,
+  checkExistence,
 };

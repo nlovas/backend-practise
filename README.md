@@ -11,7 +11,7 @@ This website acts as a social media for cosplayers! Users can show off their cos
 
 ### Front End
 
-[Reactjs](https://reactjs.org/) | [Next.js](https://nextjs.org/) | [Formik](https://jaredpalmer.com/formik/)
+[Reactjs](https://reactjs.org/) | [Next.js](https://nextjs.org/) | [Formik](https://jaredpalmer.com/formik/) | [Axios](https://github.com/axios/axios)
 
 ### Back End
 

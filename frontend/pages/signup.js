@@ -9,38 +9,13 @@ const api = "http://localhost:8080";
 class Signup extends React.Component {
   constructor(props) {
     super(props);
-    // this.state = { usernamevalue: "", pwvalue: "", emailvalue: "" };
-
-    /*this.usernameChange = this.usernameChange.bind(this);
-    this.pwChange = this.pwChange.bind(this);
-    this.emailChange = this.emailChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);*/
   }
-
-  /* usernameChange(event) {
-    this.setState({ usernamevalue: event.target.value });
-  }
-
-  pwChange(event) {
-    this.setState({ pwvalue: event.target.value });
-  }
-
-  emailChange(event) {
-    this.setState({ emailvalue: event.target.value });
-  }
-
-  handleSubmit(event) {
-    alert("successfully submitted" + this.state.value);
-    event.preventDefault();
-  }*/
 
   /*
   Create a new account using the validated information from the form
   Sends a post request to our backend to create a new user in the db
   */
   createNewAccount(data) {
-    //url = api + "/create-user";
-    // console.log("url: ", url);
     axios({
       method: "post",
       url: "http://localhost:8080/create-user",
@@ -58,6 +33,36 @@ class Signup extends React.Component {
         console.log(error);
       }
     );
+  }
+
+  /*
+  Calls api to see if the username has already been registered
+  */
+  checkUsernameExistence(username) {
+    console.log("formval is ", username);
+    return new Promise((resolve, reject) => {
+      axios({
+        method: "get",
+        url: "http://localhost:8080/user/" + username,
+        params: {
+          username: username, //,
+          //email: formVal.email,
+        },
+      }).then(
+        (response) => {
+          console.log(response);
+          if (response.data === true) {
+            //this username has been taken
+            resolve(false);
+          } else {
+            resolve(true);
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    });
   }
 
   render() {
@@ -81,23 +86,53 @@ class Signup extends React.Component {
                 .matches(
                   /^[A-Za-z0-9\-\_.]*$/,
                   "Username can only use letters, numbers, or special characters(-_.)"
-                ),
-              //check to see if this username already exists
-              /*.test(
+                )
+                //check to see if this username already exists
+                .test(
                   "checkUsernameExistence",
                   "This username is not available",
                   async (value) => {
-                    window.setTimeout(() => {
+                    return new Promise((resolve, reject) => {
+                      /*
+              Async Validation using Yup, Formik, and React https://stackoverflow.com/a/57882753
+              Answered by Stack Overflow user 이석규 (https://stackoverflow.com/users/12051163/%ec%9d%b4%ec%84%9d%ea%b7%9c)
+              */
+                      axios({
+                        method: "get",
+                        url: "http://localhost:8080/user/" + value,
+                        params: {
+                          username: value, //,
+                          //email: formVal.email,
+                        },
+                      }).then(
+                        (response) => {
+                          console.log(response);
+                          if (response.data === "true") {
+                            //this username has been taken
+                            resolve(false);
+                          } else {
+                            resolve(true);
+                          }
+                        },
+                        (error) => {
+                          console.log(error);
+                        }
+                      );
+                    });
+
+                    /* window.setTimeout(() => {
                       const errors = {};
                       errors.username = "nce try";
                       return errors;
-                    }, 2000);
-
-                    /*return new Promise((resolve, reject) => {
-                    
-                  })*/
-              /* }
-                )*/ password: Yup.string()
+                    }, 2000);*/
+                    //  this.checkUsernameExistence(value);
+                    /*.then(onfulfilled => return true;,
+                      onrejected => return false;
+                    });*/
+                    // return new Promise((resolve, reject) => {});
+                  }
+                ),
+              password: Yup.string()
                 .required("Required")
                 .min(6, "Password must be at least 6 characters long")
                 .max(20, "Password is too long")
