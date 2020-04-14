@@ -11,15 +11,32 @@ app.use(
     extended: true,
   })
 );
-app.use(cors({ origin: "http://localhost:3000" })); //only allow cors requests from here
-app.options("*", cors()); // enable cors preflight across the board
+
+//for CORS
+const corsOptions = {
+  origin: "http://localhost:3000",
+};
+
+//preflight CORS
+app.options("*", cors(corsOptions));
+
+//app.options("*", cors({ origin: "http://localhost:3000" })); // enable cors preflight across the board
+/*app.options("*", function (req, res) {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader("Access-Control-Allow-Methods", "*");
+  res.setHeader("Access-Control-Allow-Headers", "*");
+  res.end();
+});*/
+
+//app.use(cors({ origin: "http://localhost:3000" })); //only allow cors requests from here
 
 app.get("/", (request, response) => {
   response.json({ info: "Node.js, Express, and Postgres API" });
 });
 
-app.get("/users", db.getUsers);
-app.post("/create-user", db.createUser);
+app.post("/create-user", cors(corsOptions), db.createUser);
+
+app.get("/users", cors(corsOptions), db.getUsers);
 
 // sets port from config file to default unless otherwise specified with env variables
 //port setting problem solved (https://stackoverflow.com/a/18024792) by SO user Ehevutov (https://stackoverflow.com/users/183835/ehevutov)
