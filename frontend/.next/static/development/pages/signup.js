@@ -21359,19 +21359,49 @@ var Signup = /*#__PURE__*/function (_React$Component) {
     value: function checkUsernameExistence(username) {
       console.log("formval is ", username);
       return new Promise(function (resolve, reject) {
+        /*
+        Async Validation using Yup, Formik, and React https://stackoverflow.com/a/57882753
+        Answered by Stack Overflow user 이석규 (https://stackoverflow.com/users/12051163/%ec%9d%b4%ec%84%9d%ea%b7%9c)
+        */
         axios__WEBPACK_IMPORTED_MODULE_10___default()({
           method: "get",
           url: "http://localhost:8080/user/" + username,
           params: {
-            username: username //,
-            //email: formVal.email,
-
+            username: username
           }
         }).then(function (response) {
           console.log(response);
 
-          if (response.data === true) {
+          if (response.data === "true") {
             //this username has been taken
+            resolve(false);
+          } else {
+            resolve(true);
+          }
+        }, function (error) {
+          console.log(error);
+        });
+      });
+    }
+    /*
+    calls api to see if the email submitted is already registered
+    */
+
+  }, {
+    key: "checkEmailAvailable",
+    value: function checkEmailAvailable(email) {
+      return new Promise(function (resolve, reject) {
+        axios__WEBPACK_IMPORTED_MODULE_10___default()({
+          method: "get",
+          url: "http://localhost:8080/" + email,
+          params: {
+            email: email
+          }
+        }).then(function (response) {
+          console.log(response);
+
+          if (response.data === "true") {
+            //this email is already in use
             resolve(false);
           } else {
             resolve(true);
@@ -21390,28 +21420,28 @@ var Signup = /*#__PURE__*/function (_React$Component) {
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 70,
+          lineNumber: 101,
           columnNumber: 7
         }
       }, __jsx(_components_Header__WEBPACK_IMPORTED_MODULE_7__["default"], {
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 71,
+          lineNumber: 102,
           columnNumber: 9
         }
       }), __jsx("div", {
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 72,
+          lineNumber: 103,
           columnNumber: 9
         }
       }, __jsx("div", {
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 73,
+          lineNumber: 104,
           columnNumber: 11
         }
       }, "Sign up"), __jsx(formik__WEBPACK_IMPORTED_MODULE_8__["Formik"], {
@@ -21428,32 +21458,7 @@ var Signup = /*#__PURE__*/function (_React$Component) {
               while (1) {
                 switch (_context.prev = _context.next) {
                   case 0:
-                    return _context.abrupt("return", new Promise(function (resolve, reject) {
-                      /*
-                      Async Validation using Yup, Formik, and React https://stackoverflow.com/a/57882753
-                      Answered by Stack Overflow user 이석규 (https://stackoverflow.com/users/12051163/%ec%9d%b4%ec%84%9d%ea%b7%9c)
-                      */
-                      axios__WEBPACK_IMPORTED_MODULE_10___default()({
-                        method: "get",
-                        url: "http://localhost:8080/user/" + value,
-                        params: {
-                          username: value //,
-                          //email: formVal.email,
-
-                        }
-                      }).then(function (response) {
-                        console.log(response);
-
-                        if (response.data === "true") {
-                          //this username has been taken
-                          resolve(false);
-                        } else {
-                          resolve(true);
-                        }
-                      }, function (error) {
-                        console.log(error);
-                      });
-                    }));
+                    return _context.abrupt("return", _this.checkUsernameExistence(value));
 
                   case 1:
                   case "end":
@@ -21508,18 +21513,24 @@ var Signup = /*#__PURE__*/function (_React$Component) {
           confirmPassword: yup__WEBPACK_IMPORTED_MODULE_9__["string"]().required("Required").oneOf([yup__WEBPACK_IMPORTED_MODULE_9__["ref"]("password"), null], "Passwords do not match"),
           email: yup__WEBPACK_IMPORTED_MODULE_9__["string"]().required("Required").email("Must be a valid email")
         }),
-        onSubmit: function onSubmit(fields) {
-          //  alert("SUCCESS!! :-)\n\n" + JSON.stringify(fields, null, 4));
-          _this.createNewAccount({
-            username: fields.username,
-            password: fields.password,
-            email: fields.email
+        onSubmit: function onSubmit(fields, actions) {
+          //check to see if email is already in use
+          _this.checkEmailAvailable(fields.email).then(function (isAvailable) {
+            if (isAvailable) {
+              _this.createNewAccount({
+                username: fields.username,
+                password: fields.password,
+                email: fields.email
+              });
+            } else {
+              alert("this email is already in use");
+            }
           });
         },
         __self: this,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 74,
+          lineNumber: 105,
           columnNumber: 11
         }
       }, function (props) {
@@ -21658,7 +21669,7 @@ var Signup = /*#__PURE__*/function (_React$Component) {
 
 /***/ }),
 
-/***/ 2:
+/***/ 3:
 /*!********************************************************************************************************************************************************!*\
   !*** multi next-client-pages-loader?page=%2Fsignup&absolutePagePath=C%3A%5CUsers%5CUser%5CDocuments%5Cbackend-practise%5Cfrontend%5Cpages%5Csignup.js ***!
   \********************************************************************************************************************************************************/
@@ -21681,5 +21692,5 @@ module.exports = dll_c2e10d183b950a67d9e7;
 
 /***/ })
 
-},[[2,"static/runtime/webpack.js"]]]);
+},[[3,"static/runtime/webpack.js"]]]);
 //# sourceMappingURL=signup.js.map

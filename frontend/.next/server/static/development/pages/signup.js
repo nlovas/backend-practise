@@ -88,7 +88,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1926,19 +1926,48 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   checkUsernameExistence(username) {
     console.log("formval is ", username);
     return new Promise((resolve, reject) => {
+      /*
+      Async Validation using Yup, Formik, and React https://stackoverflow.com/a/57882753
+      Answered by Stack Overflow user 이석규 (https://stackoverflow.com/users/12051163/%ec%9d%b4%ec%84%9d%ea%b7%9c)
+      */
       axios__WEBPACK_IMPORTED_MODULE_4___default()({
         method: "get",
         url: "http://localhost:8080/user/" + username,
         params: {
-          username: username //,
-          //email: formVal.email,
-
+          username: username
         }
       }).then(response => {
         console.log(response);
 
-        if (response.data === true) {
+        if (response.data === "true") {
           //this username has been taken
+          resolve(false);
+        } else {
+          resolve(true);
+        }
+      }, error => {
+        console.log(error);
+      });
+    });
+  }
+  /*
+  calls api to see if the email submitted is already registered
+  */
+
+
+  checkEmailAvailable(email) {
+    return new Promise((resolve, reject) => {
+      axios__WEBPACK_IMPORTED_MODULE_4___default()({
+        method: "get",
+        url: "http://localhost:8080/" + email,
+        params: {
+          email: email
+        }
+      }).then(response => {
+        console.log(response);
+
+        if (response.data === "true") {
+          //this email is already in use
           resolve(false);
         } else {
           resolve(true);
@@ -1954,28 +1983,28 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 70,
+        lineNumber: 101,
         columnNumber: 7
       }
     }, __jsx(_components_Header__WEBPACK_IMPORTED_MODULE_1__["default"], {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 71,
+        lineNumber: 102,
         columnNumber: 9
       }
     }), __jsx("div", {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 72,
+        lineNumber: 103,
         columnNumber: 9
       }
     }, __jsx("div", {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 73,
+        lineNumber: 104,
         columnNumber: 11
       }
     }, "Sign up"), __jsx(formik__WEBPACK_IMPORTED_MODULE_2__["Formik"], {
@@ -1988,43 +2017,7 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       validationSchema: yup__WEBPACK_IMPORTED_MODULE_3__["object"]().shape({
         username: yup__WEBPACK_IMPORTED_MODULE_3__["string"]().required("Required").min(3, "Username must be at least 3 characters long").max(20, "Username is too long").matches(/^[A-Za-z0-9\-\_.]*$/, "Username can only use letters, numbers, or special characters(-_.)") //check to see if this username already exists
         .test("checkUsernameExistence", "This username is not available", async value => {
-          return new Promise((resolve, reject) => {
-            /*
-            Async Validation using Yup, Formik, and React https://stackoverflow.com/a/57882753
-            Answered by Stack Overflow user 이석규 (https://stackoverflow.com/users/12051163/%ec%9d%b4%ec%84%9d%ea%b7%9c)
-            */
-            axios__WEBPACK_IMPORTED_MODULE_4___default()({
-              method: "get",
-              url: "http://localhost:8080/user/" + value,
-              params: {
-                username: value //,
-                //email: formVal.email,
-
-              }
-            }).then(response => {
-              console.log(response);
-
-              if (response.data === "true") {
-                //this username has been taken
-                resolve(false);
-              } else {
-                resolve(true);
-              }
-            }, error => {
-              console.log(error);
-            });
-          });
-          /* window.setTimeout(() => {
-            const errors = {};
-            errors.username = "nce try";
-            return errors;
-          }, 2000);*/
-          //  this.checkUsernameExistence(value);
-
-          /*.then(onfulfilled => return true;,
-            onrejected => return false;
-          });*/
-          // return new Promise((resolve, reject) => {});
+          return this.checkUsernameExistence(value);
         }),
         password: yup__WEBPACK_IMPORTED_MODULE_3__["string"]().required("Required").min(6, "Password must be at least 6 characters long").max(20, "Password is too long").matches(/(?=(.*[0-9]))(?=.*[\!@#$%^&*\-_.])(?=.*[a-z])(?=(.*[A-Z]))(?=(.*))/, "Password must contain: one or more lowercase letters, uppercase letters, a number, and a symbol(!@#$%^&*-_.)")
         /*
@@ -2072,18 +2065,24 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         confirmPassword: yup__WEBPACK_IMPORTED_MODULE_3__["string"]().required("Required").oneOf([yup__WEBPACK_IMPORTED_MODULE_3__["ref"]("password"), null], "Passwords do not match"),
         email: yup__WEBPACK_IMPORTED_MODULE_3__["string"]().required("Required").email("Must be a valid email")
       }),
-      onSubmit: fields => {
-        //  alert("SUCCESS!! :-)\n\n" + JSON.stringify(fields, null, 4));
-        this.createNewAccount({
-          username: fields.username,
-          password: fields.password,
-          email: fields.email
+      onSubmit: (fields, actions) => {
+        //check to see if email is already in use
+        this.checkEmailAvailable(fields.email).then(isAvailable => {
+          if (isAvailable) {
+            this.createNewAccount({
+              username: fields.username,
+              password: fields.password,
+              email: fields.email
+            });
+          } else {
+            alert("this email is already in use");
+          }
         });
       },
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 74,
+        lineNumber: 105,
         columnNumber: 11
       }
     }, props => __jsx(formik__WEBPACK_IMPORTED_MODULE_2__["Form"], {
@@ -2218,7 +2217,7 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
 
 /***/ }),
 
-/***/ 4:
+/***/ 5:
 /*!*******************************!*\
   !*** multi ./pages/signup.js ***!
   \*******************************/

@@ -46,7 +46,9 @@ app.get("/", (request, response) => {
 
 app.get("/users", cors(corsOptions), db.getUsers);
 
-app.get("/user/:username", cors(corsOptions), db.checkExistence);
+app.get("/user/:username", cors(corsOptions), db.checkUsernameExistence);
+
+app.get("/:email", cors(corsOptions), db.checkEmailAvailable);
 
 // ------------------------ POST REQUESTS ---------------------------
 

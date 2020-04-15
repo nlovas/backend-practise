@@ -41,18 +41,49 @@ class Signup extends React.Component {
   checkUsernameExistence(username) {
     console.log("formval is ", username);
     return new Promise((resolve, reject) => {
+      /*
+Async Validation using Yup, Formik, and React https://stackoverflow.com/a/57882753
+Answered by Stack Overflow user 이석규 (https://stackoverflow.com/users/12051163/%ec%9d%b4%ec%84%9d%ea%b7%9c)
+*/
       axios({
         method: "get",
         url: "http://localhost:8080/user/" + username,
         params: {
-          username: username, //,
-          //email: formVal.email,
+          username: username,
         },
       }).then(
         (response) => {
           console.log(response);
-          if (response.data === true) {
+          if (response.data === "true") {
             //this username has been taken
+            resolve(false);
+          } else {
+            resolve(true);
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    });
+  }
+
+  /*
+  calls api to see if the email submitted is already registered
+  */
+  checkEmailAvailable(email) {
+    return new Promise((resolve, reject) => {
+      axios({
+        method: "get",
+        url: "http://localhost:8080/" + email,
+        params: {
+          email: email,
+        },
+      }).then(
+        (response) => {
+          console.log(response);
+          if (response.data === "true") {
+            //this email is already in use
             resolve(false);
           } else {
             resolve(true);
@@ -92,44 +123,7 @@ class Signup extends React.Component {
                   "checkUsernameExistence",
                   "This username is not available",
                   async (value) => {
-                    return new Promise((resolve, reject) => {
-                      /*
-              Async Validation using Yup, Formik, and React https://stackoverflow.com/a/57882753
-              Answered by Stack Overflow user 이석규 (https://stackoverflow.com/users/12051163/%ec%9d%b4%ec%84%9d%ea%b7%9c)
-              */
-                      axios({
-                        method: "get",
-                        url: "http://localhost:8080/user/" + value,
-                        params: {
-                          username: value, //,
-                          //email: formVal.email,
-                        },
-                      }).then(
-                        (response) => {
-                          console.log(response);
-                          if (response.data === "true") {
-                            //this username has been taken
-                            resolve(false);
-                          } else {
-                            resolve(true);
-                          }
-                        },
-                        (error) => {
-                          console.log(error);
-                        }
-                      );
-                    });
-
-                    /* window.setTimeout(() => {
-                      const errors = {};
-                      errors.username = "nce try";
-                      return errors;
-                    }, 2000);*/
-                    //  this.checkUsernameExistence(value);
-                    /*.then(onfulfilled => return true;,
-                      onrejected => return false;
-                    });*/
-                    // return new Promise((resolve, reject) => {});
+                    return this.checkUsernameExistence(value);
                   }
                 ),
               password: Yup.string()
@@ -193,12 +187,18 @@ pASSw@rd222
                 .required("Required")
                 .email("Must be a valid email"),
             })}
-            onSubmit={(fields) => {
-              //  alert("SUCCESS!! :-)\n\n" + JSON.stringify(fields, null, 4));
-              this.createNewAccount({
-                username: fields.username,
-                password: fields.password,
-                email: fields.email,
+            onSubmit={(fields, actions) => {
+              //check to see if email is already in use
+              this.checkEmailAvailable(fields.email).then((isAvailable) => {
+                if (isAvailable) {
+                  this.createNewAccount({
+                    username: fields.username,
+                    password: fields.password,
+                    email: fields.email,
+                  });
+                } else {
+                  alert("this email is already in use");
+                }
               });
             }}
           >

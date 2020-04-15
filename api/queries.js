@@ -22,9 +22,29 @@ const getUsers = (request, response) => {
 /*
 Returns true/false if a user exists with this username
 */
-const checkExistence = (request, response) => {
+const checkUsernameExistence = (request, response) => {
   console.log(request.params);
   db.any("select id from users where username = $1", [request.params.username])
+    .then((data) => {
+      console.log("DATA: ", data);
+      if (data.length > 0) {
+        response.json("true");
+      } else {
+        response.json("false");
+      }
+    })
+    .catch((error) => {
+      console.log("An error occurred: ", error);
+      response.status(500).json(error);
+    });
+};
+
+/*
+returns true/false is an email has already been registered
+*/
+const checkEmailAvailable = (request, response) => {
+  console.log(request.params);
+  db.any("select id from users where email = $1", [request.params.email])
     .then((data) => {
       console.log("DATA: ", data);
       if (data.length > 0) {
@@ -68,5 +88,6 @@ const createUser = (request, response) => {
 module.exports = {
   getUsers,
   createUser,
-  checkExistence,
+  checkUsernameExistence,
+  checkEmailAvailable,
 };
