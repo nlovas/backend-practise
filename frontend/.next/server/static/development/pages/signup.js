@@ -1896,6 +1896,13 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   constructor(props) {
     super(props);
   }
+  /*  onInputBlur(event, field) {
+    console.log("username had an input blur", event, field);
+    // handleBlur(event);
+    //validateField(field);
+  }
+  */
+
   /*
   Create a new account using the validated information from the form
   Sends a post request to our backend to create a new user in the db
@@ -1916,6 +1923,70 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       console.log(response);
     }, error => {
       console.log(error);
+    });
+  }
+  /*
+  Check existence of both username and email and only return true if both are not already in use
+            
+                NOTE: There is a known bug with Yup's .test calling every time any field is blurred
+                This would mean a TON of unneeded calls to the api
+                Since there were no workarounds that worked for me, I changed mine to
+                check on submit instead of onBlur :'(
+                Follow the issue here https://github.com/jaredpalmer/formik/issues/512
+                
+                
+  */
+
+
+  checkUsernameAndEmail(username, email, actions) {
+    return new Promise((resolve, reject) => {
+      var p1 = this.checkUsernameExistence(username);
+      var p2 = this.checkEmailAvailable(email);
+      Promise.all([p1, p2]).then(values => {
+        //both should have returned true in order to create account
+        console.log(values);
+
+        if (values[0] === false) {
+          //username is already in use, show an error to the user
+          actions.setFieldError("username", "This username is already in use");
+          resolve(false);
+        }
+
+        if (values[1] === false) {
+          //email is already in use, show an error to the user
+          actions.setFieldError("email", "This email is already in use");
+          resolve(false);
+        }
+
+        if (values[0] === true && values[1] === true) {
+          //both username and email are not taken
+          resolve(true);
+        }
+      }); //check if username is already in use
+
+      /* this.checkUsernameExistence(username)
+      .then((isAvailable)=>{
+      if (isAvailable) {
+      
+      } else{
+        actions.setFieldError(
+          "username",
+          "This username is already in use"
+        );
+      }
+      });
+      //check to see if email is already in use
+      this.checkEmailAvailable(fields.email)
+      .then((isAvailable) => {
+      if (isAvailable) {
+        
+      } else {
+        actions.setFieldError(
+          "email",
+          "This email is already in use"
+        );
+      }
+      });*/
     });
   }
   /*
@@ -1983,28 +2054,28 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 101,
+        lineNumber: 168,
         columnNumber: 7
       }
     }, __jsx(_components_Header__WEBPACK_IMPORTED_MODULE_1__["default"], {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 102,
+        lineNumber: 169,
         columnNumber: 9
       }
     }), __jsx("div", {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 103,
+        lineNumber: 170,
         columnNumber: 9
       }
     }, __jsx("div", {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 104,
+        lineNumber: 171,
         columnNumber: 11
       }
     }, "Sign up"), __jsx(formik__WEBPACK_IMPORTED_MODULE_2__["Formik"], {
@@ -2015,10 +2086,16 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         email: ""
       },
       validationSchema: yup__WEBPACK_IMPORTED_MODULE_3__["object"]().shape({
-        username: yup__WEBPACK_IMPORTED_MODULE_3__["string"]().required("Required").min(3, "Username must be at least 3 characters long").max(20, "Username is too long").matches(/^[A-Za-z0-9\-\_.]*$/, "Username can only use letters, numbers, or special characters(-_.)") //check to see if this username already exists
-        .test("checkUsernameExistence", "This username is not available", async value => {
-          return this.checkUsernameExistence(value);
-        }),
+        username: yup__WEBPACK_IMPORTED_MODULE_3__["string"]().required("Required").min(3, "Username must be at least 3 characters long").max(20, "Username is too long").matches(/^[A-Za-z0-9\-\_.]*$/, "Username can only use letters, numbers, or special characters(-_.)"),
+        //check to see if this username already exists
+
+        /* .test(
+            "checkUsernameExistence",
+            "This username is not available",
+            async (value) => {
+              return this.checkUsernameExistence(value);
+            }
+          ),*/
         password: yup__WEBPACK_IMPORTED_MODULE_3__["string"]().required("Required").min(6, "Password must be at least 6 characters long").max(20, "Password is too long").matches(/(?=(.*[0-9]))(?=.*[\!@#$%^&*\-_.])(?=.*[a-z])(?=(.*[A-Z]))(?=(.*))/, "Password must contain: one or more lowercase letters, uppercase letters, a number, and a symbol(!@#$%^&*-_.)")
         /*
         (?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*\-\_])
@@ -2066,37 +2143,36 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         email: yup__WEBPACK_IMPORTED_MODULE_3__["string"]().required("Required").email("Must be a valid email")
       }),
       onSubmit: (fields, actions) => {
-        //check to see if email is already in use
-        this.checkEmailAvailable(fields.email).then(isAvailable => {
-          if (isAvailable) {
+        //check to see if username and email already in use
+        this.checkUsernameAndEmail(fields.username, fields.email, actions).then(bothValid => {
+          if (bothValid) {
+            console.log("both were valid. creating new account");
             this.createNewAccount({
               username: fields.username,
               password: fields.password,
               email: fields.email
             });
-          } else {
-            alert("this email is already in use");
           }
         });
       },
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 105,
+        lineNumber: 172,
         columnNumber: 11
       }
     }, props => __jsx(formik__WEBPACK_IMPORTED_MODULE_2__["Form"], {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 206,
+        lineNumber: 277,
         columnNumber: 15
       }
     }, __jsx("label", {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 207,
+        lineNumber: 278,
         columnNumber: 17
       }
     }, "First, choose a unique username"), __jsx(formik__WEBPACK_IMPORTED_MODULE_2__["Field"], {
@@ -2106,7 +2182,7 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 208,
+        lineNumber: 279,
         columnNumber: 17
       }
     }), __jsx(formik__WEBPACK_IMPORTED_MODULE_2__["ErrorMessage"], {
@@ -2116,14 +2192,14 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 218,
+        lineNumber: 289,
         columnNumber: 17
       }
     }), __jsx("label", {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 223,
+        lineNumber: 294,
         columnNumber: 17
       }
     }, "Enter a password (must contain min. 6 characters)"), __jsx(formik__WEBPACK_IMPORTED_MODULE_2__["Field"], {
@@ -2133,7 +2209,7 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 224,
+        lineNumber: 295,
         columnNumber: 17
       }
     }), __jsx(formik__WEBPACK_IMPORTED_MODULE_2__["ErrorMessage"], {
@@ -2143,14 +2219,14 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 234,
+        lineNumber: 305,
         columnNumber: 17
       }
     }), __jsx("label", {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 240,
+        lineNumber: 311,
         columnNumber: 17
       }
     }, "Please confirm your password"), __jsx(formik__WEBPACK_IMPORTED_MODULE_2__["Field"], {
@@ -2160,7 +2236,7 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 241,
+        lineNumber: 312,
         columnNumber: 17
       }
     }), __jsx(formik__WEBPACK_IMPORTED_MODULE_2__["ErrorMessage"], {
@@ -2170,14 +2246,14 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 252,
+        lineNumber: 323,
         columnNumber: 17
       }
     }), __jsx("label", {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 257,
+        lineNumber: 328,
         columnNumber: 17
       }
     }, "Enter your email"), __jsx(formik__WEBPACK_IMPORTED_MODULE_2__["Field"], {
@@ -2187,7 +2263,7 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 258,
+        lineNumber: 329,
         columnNumber: 17
       }
     }), __jsx(formik__WEBPACK_IMPORTED_MODULE_2__["ErrorMessage"], {
@@ -2197,7 +2273,7 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 268,
+        lineNumber: 339,
         columnNumber: 17
       }
     }), __jsx("button", {
@@ -2205,7 +2281,7 @@ class Signup extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       __self: this,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 273,
+        lineNumber: 344,
         columnNumber: 17
       }
     }, "Register")))));

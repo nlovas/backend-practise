@@ -11,6 +11,13 @@ class Signup extends React.Component {
     super(props);
   }
 
+  /*  onInputBlur(event, field) {
+    console.log("username had an input blur", event, field);
+    // handleBlur(event);
+    //validateField(field);
+  }
+  */
+
   /*
   Create a new account using the validated information from the form
   Sends a post request to our backend to create a new user in the db
@@ -33,6 +40,66 @@ class Signup extends React.Component {
         console.log(error);
       }
     );
+  }
+  /*
+Check existence of both username and email and only return true if both are not already in use
+            
+                NOTE: There is a known bug with Yup's .test calling every time any field is blurred
+                This would mean a TON of unneeded calls to the api
+                Since there were no workarounds that worked for me, I changed mine to
+                check on submit instead of onBlur :'(
+                Follow the issue here https://github.com/jaredpalmer/formik/issues/512
+                
+                
+*/
+  checkUsernameAndEmail(username, email, actions) {
+    return new Promise((resolve, reject) => {
+      var p1 = this.checkUsernameExistence(username);
+      var p2 = this.checkEmailAvailable(email);
+      Promise.all([p1, p2]).then((values) => {
+        //both should have returned true in order to create account
+        console.log(values);
+        if (values[0] === false) {
+          //username is already in use, show an error to the user
+          actions.setFieldError("username", "This username is already in use");
+          resolve(false);
+        }
+        if (values[1] === false) {
+          //email is already in use, show an error to the user
+          actions.setFieldError("email", "This email is already in use");
+          resolve(false);
+        }
+        if (values[0] === true && values[1] === true) {
+          //both username and email are not taken
+          resolve(true);
+        }
+      });
+
+      //check if username is already in use
+      /* this.checkUsernameExistence(username)
+    .then((isAvailable)=>{
+      if (isAvailable) {
+      
+      } else{
+        actions.setFieldError(
+          "username",
+          "This username is already in use"
+        );
+      }
+    });
+    //check to see if email is already in use
+    this.checkEmailAvailable(fields.email)
+    .then((isAvailable) => {
+      if (isAvailable) {
+        
+      } else {
+        actions.setFieldError(
+          "email",
+          "This email is already in use"
+        );
+      }
+    });*/
+    });
   }
 
   /*
@@ -117,15 +184,16 @@ Answered by Stack Overflow user 이석규 (https://stackoverflow.com/users/12051
                 .matches(
                   /^[A-Za-z0-9\-\_.]*$/,
                   "Username can only use letters, numbers, or special characters(-_.)"
-                )
-                //check to see if this username already exists
-                .test(
+                ),
+              //check to see if this username already exists
+
+              /* .test(
                   "checkUsernameExistence",
                   "This username is not available",
                   async (value) => {
                     return this.checkUsernameExistence(value);
                   }
-                ),
+                ),*/
               password: Yup.string()
                 .required("Required")
                 .min(6, "Password must be at least 6 characters long")
@@ -188,16 +256,19 @@ pASSw@rd222
                 .email("Must be a valid email"),
             })}
             onSubmit={(fields, actions) => {
-              //check to see if email is already in use
-              this.checkEmailAvailable(fields.email).then((isAvailable) => {
-                if (isAvailable) {
+              //check to see if username and email already in use
+              this.checkUsernameAndEmail(
+                fields.username,
+                fields.email,
+                actions
+              ).then((bothValid) => {
+                if (bothValid) {
+                  console.log("both were valid. creating new account");
                   this.createNewAccount({
                     username: fields.username,
                     password: fields.password,
                     email: fields.email,
                   });
-                } else {
-                  alert("this email is already in use");
                 }
               });
             }}

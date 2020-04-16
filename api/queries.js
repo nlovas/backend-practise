@@ -23,7 +23,7 @@ const getUsers = (request, response) => {
 Returns true/false if a user exists with this username
 */
 const checkUsernameExistence = (request, response) => {
-  console.log(request.params);
+  console.log("checking username existance");
   db.any("select id from users where username = $1", [request.params.username])
     .then((data) => {
       console.log("DATA: ", data);
