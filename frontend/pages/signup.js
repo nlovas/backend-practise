@@ -43,14 +43,11 @@ class Signup extends React.Component {
   }
   /*
 Check existence of both username and email and only return true if both are not already in use
-            
-                NOTE: There is a known bug with Yup's .test calling every time any field is blurred
-                This would mean a TON of unneeded calls to the api
-                Since there were no workarounds that worked for me, I changed mine to
-                check on submit instead of onBlur :'(
-                Follow the issue here https://github.com/jaredpalmer/formik/issues/512
-                
-                
+  NOTE: There is a known bug with Yup's .test calling every time any field is blurred
+  This would mean a TON of unneeded calls to the api
+  Since there were no workarounds that worked for me, I changed mine to
+  check on submit instead of onBlur :'(
+  Follow the issue here https://github.com/jaredpalmer/formik/issues/512            
 */
   checkUsernameAndEmail(username, email, actions) {
     return new Promise((resolve, reject) => {

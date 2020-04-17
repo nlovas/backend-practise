@@ -17,6 +17,10 @@ This website acts as a social media for cosplayers! Users can show off their cos
 
 [Postgres](https://www.postgresql.org/) | [Express](https://expressjs.com/) (Node) | [pg-promise](https://github.com/vitaly-t/pg-promise)
 
+### Testing
+
+[Jest](https://github.com/facebook/jest) | [Enzyme](https://github.com/enzymejs/enzyme)
+
 ---
 
 ## Running the Code
@@ -29,6 +33,8 @@ To run the backend, go to /api and use the command `node index.js`
 
 To run the frontend, go to /frontend and use the command `npm run dev`
 
+### Testing
+
 ---
 
 ### Resources and tutorials I found useful:
@@ -39,6 +45,8 @@ To run the frontend, go to /frontend and use the command `npm run dev`
 - [Use RegEx To Test Password Strength In JavaScript](https://www.thepolyglotdeveloper.com/2015/05/use-regex-to-test-password-strength-in-javascript/)
 - [How To Easily Set-Up Node Config Following These Best Practises](https://codingsans.com/blog/node-config-best-practices)
 - [Using CORS](https://www.html5rocks.com/en/tutorials/cors/)
+- [Hashing Passwords: One-Way Road to Security](https://auth0.com/blog/hashing-passwords-one-way-road-to-security/)
+- [Unit test Next.js with Jest and Enzyme](https://medium.com/@miiny/unit-test-next-js-with-jest-and-enzyme-5b305a8e29fe)
 
 ### Misc Notes:
 
