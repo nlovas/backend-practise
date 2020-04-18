@@ -3,7 +3,7 @@ module.exports = {
   /* transform: {
     "^.+\\.tsx?$": "ts-jest",
   },*/
-  testMatch: ["**/*.(test|spec).(ts|tsx)", "**/__tests__/*.js?(x)"],
+  // testMatch: ["**/*.(test|spec).(ts|tsx)", "**/__tests__/*.js?(x)"],
   globals: {
     /*"ts-jest": {
       useBabelrc: true,

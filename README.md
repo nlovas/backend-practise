@@ -11,7 +11,7 @@ This website acts as a social media for cosplayers! Users can show off their cos
 
 ### Front End
 
-[Reactjs](https://reactjs.org/) | [Next.js](https://nextjs.org/) | [Formik](https://jaredpalmer.com/formik/) | [Axios](https://github.com/axios/axios)
+[Reactjs](https://reactjs.org/) | [Next.js](https://nextjs.org/) | [Formik](https://jaredpalmer.com/formik/)(With [Yup](https://github.com/jquense/yup)) | [Axios](https://github.com/axios/axios)
 
 ### Back End
 
@@ -35,6 +35,8 @@ To run the frontend, go to /frontend and use the command `npm run dev`
 
 ### Testing
 
+To run the tests, go to /frontend and use the command `npm run test`
+
 ---
 
 ### Resources and tutorials I found useful:
@@ -47,6 +49,7 @@ To run the frontend, go to /frontend and use the command `npm run dev`
 - [Using CORS](https://www.html5rocks.com/en/tutorials/cors/)
 - [Hashing Passwords: One-Way Road to Security](https://auth0.com/blog/hashing-passwords-one-way-road-to-security/)
 - [Unit test Next.js with Jest and Enzyme](https://medium.com/@miiny/unit-test-next-js-with-jest-and-enzyme-5b305a8e29fe)
+- [Testing React with Jest and Enzyme I](https://medium.com/codeclan/testing-react-with-jest-and-enzyme-20505fec4675)
 
 ### Misc Notes:
 
