@@ -1,4 +1,5 @@
 import Header from "../components/Header";
+import * as React from "react";
 
 class About extends React.Component {
   //constructor(){}
