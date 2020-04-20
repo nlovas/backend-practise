@@ -151,7 +151,7 @@ class Signup extends React.Component {
       <div>
         <Header />
         <div>
-          <div>Sign up</div>
+          <h1>Sign up</h1>
           <Formik
             initialValues={{
               username: "",
@@ -269,6 +269,11 @@ class Signup extends React.Component {
               </Form>
             )}
           </Formik>
+          <div>
+            Password hashing and encryption have not yet been implemented.
+            Please don't use a real password at this time. (This div will act as
+            a TODO and can't be removed until it's been done!)
+          </div>
         </div>
       </div>
     );

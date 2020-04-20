@@ -88,7 +88,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -2559,7 +2559,7 @@ var Index = /*#__PURE__*/function (_React$Component) {
     key: "render",
     //constructor(){}
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__["createElement"]("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__["createElement"](_components_Header__WEBPACK_IMPORTED_MODULE_6__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__["createElement"]("p", null, "Hello Next.js"));
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__["createElement"]("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__["createElement"](_components_Header__WEBPACK_IMPORTED_MODULE_6__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__["createElement"]("h1", null, "Welcome to the Island!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__["createElement"]("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__["createElement"]("div", null, "Welcome to Isle of Cosplay! A community* of cosplayers sharing their work and crafting secrets."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__["createElement"]("div", null, "*This is a website created in order to practise back-end development. But I am working on it as if it were the real deal c:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__["createElement"]("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__["createElement"]("h2", null, "News"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__["createElement"]("div", null, "This is where the admin news posts will eventually go.")));
     }
   }]);
 
@@ -2570,7 +2570,7 @@ var Index = /*#__PURE__*/function (_React$Component) {
 
 /***/ }),
 
-/***/ 3:
+/***/ 6:
 /*!******************************!*\
   !*** multi ./pages/index.js ***!
   \******************************/

@@ -7,7 +7,21 @@ class Index extends React.Component {
     return (
       <div>
         <Header />
-        <p>Hello Next.js</p>
+        <h1>Welcome to the Island!</h1>
+        <div>
+          <div>
+            Welcome to Isle of Cosplay! A community* of cosplayers sharing their
+            work and crafting secrets.
+          </div>
+          <div>
+            *This is a website created in order to practise back-end
+            development. But I am working on it as if it were the real deal c:
+          </div>
+        </div>
+        <div>
+          <h2>News</h2>
+          <div>This is where the admin news posts will eventually go.</div>
+        </div>
       </div>
     );
   }

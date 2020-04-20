@@ -4589,7 +4589,7 @@ var Index = /*#__PURE__*/function (_React$Component) {
     key: "render",
     //constructor(){}
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__["createElement"]("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__["createElement"](_components_Header__WEBPACK_IMPORTED_MODULE_6__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__["createElement"]("p", null, "Hello Next.js"));
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__["createElement"]("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__["createElement"](_components_Header__WEBPACK_IMPORTED_MODULE_6__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__["createElement"]("h1", null, "Welcome to the Island!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__["createElement"]("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__["createElement"]("div", null, "Welcome to Isle of Cosplay! A community* of cosplayers sharing their work and crafting secrets."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__["createElement"]("div", null, "*This is a website created in order to practise back-end development. But I am working on it as if it were the real deal c:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__["createElement"]("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__["createElement"]("h2", null, "News"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__["createElement"]("div", null, "This is where the admin news posts will eventually go.")));
     }
   }]);
 
@@ -4600,7 +4600,7 @@ var Index = /*#__PURE__*/function (_React$Component) {
 
 /***/ }),
 
-/***/ 1:
+/***/ 4:
 /*!*************************************************************************************************************************************************!*\
   !*** multi next-client-pages-loader?page=%2F&absolutePagePath=C%3A%5CUsers%5CUser%5CDocuments%5Cbackend-practise%5Cfrontend%5Cpages%5Cindex.js ***!
   \*************************************************************************************************************************************************/
@@ -4623,5 +4623,5 @@ module.exports = dll_c2e10d183b950a67d9e7;
 
 /***/ })
 
-},[[1,"static/runtime/webpack.js"]]]);
+},[[4,"static/runtime/webpack.js"]]]);
 //# sourceMappingURL=index.js.map
