@@ -4,6 +4,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import * as React from "react";
+import { Router } from "next/router";
 
 const api = "http://localhost:8080";
 
@@ -22,6 +23,13 @@ class Signup extends React.Component {
             username: fields.username,
             password: fields.password,
             email: fields.email,
+          }).then((result) => {
+            console.log("result was ", result);
+            if (result.status === 200) {
+              Router.push("/about");
+            } else {
+              //TODO: show the user an error message
+            }
           });
         }
       }
@@ -33,23 +41,27 @@ class Signup extends React.Component {
   Sends a post request to our backend to create a new user in the db
   */
   createNewAccount(data) {
-    axios({
-      method: "post",
-      url: "http://localhost:8080/create-user",
-      data: {
-        username: data.username,
-        password: data.password,
-        email: data.email,
-        admin: "false",
-      },
-    }).then(
-      (response) => {
-        console.log(response);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    return new Promise((resolve, reject) => {
+      axios({
+        method: "post",
+        url: "http://localhost:8080/create-user",
+        data: {
+          username: data.username,
+          password: data.password,
+          email: data.email,
+          admin: "false",
+        },
+      }).then(
+        (response) => {
+          console.log(response);
+          resolve(response);
+        },
+        (error) => {
+          console.log(error);
+          resolve(error);
+        }
+      );
+    });
   }
 
   /*

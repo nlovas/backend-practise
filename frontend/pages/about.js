@@ -40,10 +40,7 @@ class About extends React.Component {
         </div>
         <h3>Wait... Who made this website?</h3>
         <div>
-          {" "}
-          <Link href="//github.com/nlovas">
-            <a>Me!</a>
-          </Link>{" "}
+          <a href="https://github.com/nlovas">Me!</a>
         </div>
         <h3>What are some upcoming features?</h3>
         <div>
