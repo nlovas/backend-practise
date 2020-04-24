@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import * as React from "react";
 import { Router } from "next/router";
+import Head from "next/head";
 
 const api = "http://localhost:8080";
 
@@ -26,7 +27,8 @@ class Signup extends React.Component {
           }).then((result) => {
             console.log("result was ", result);
             if (result.status === 200) {
-              Router.push("/about");
+              //  Router.push("/about");
+              console.log("account creation successful");
             } else {
               //TODO: show the user an error message
             }
@@ -161,6 +163,9 @@ class Signup extends React.Component {
   render() {
     return (
       <div>
+        <Head>
+          <title>Sign Up</title>
+        </Head>
         <Header />
         <div>
           <h1>Sign up</h1>

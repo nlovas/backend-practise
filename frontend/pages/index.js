@@ -1,16 +1,20 @@
 import * as React from "react";
 import Header from "../components/Header";
 import Link from "next/link";
+import Head from "next/head";
 
 class Index extends React.Component {
   //constructor(){}
   render() {
     return (
       <div>
+        <Head>
+          <title>Isle of Cosplay</title>
+        </Head>
         <Header />
         <h1>Welcome to the Island!</h1>
         <div>
-          <Link href="/user/niwwi">
+          <Link href="/user/[userid]" as="/user/niwwi">
             <a>Niwwi is a test user</a>
           </Link>
           <div>

@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import * as React from "react";
 import Link from "next/link";
+import Head from "next/head";
 
 const api = "http://localhost:8080";
 
@@ -49,6 +50,9 @@ class Login extends React.Component {
   render() {
     return (
       <div>
+        <Head>
+          <title>Log In</title>
+        </Head>
         <Header />
         <h1>Log In</h1>
         <div>

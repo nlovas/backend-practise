@@ -1,12 +1,16 @@
 import Header from "../components/Header";
 import * as React from "react";
 import Link from "next/link";
+import Head from "next/head";
 
 class About extends React.Component {
   //constructor(){}
   render() {
     return (
       <div>
+        <Head>
+          <title>About</title>
+        </Head>
         <Header />
         <h1>About</h1>
         <div>

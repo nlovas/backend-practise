@@ -40,6 +40,26 @@ const checkUsernameExistence = (request, response) => {
 };
 
 /*
+For visiting a user's page. Return relevant information
+*/
+const getUserProfile = (request, response) => {
+  console.log("getting user profile data");
+  db.any("select id from users where username = $1", [request.params.username])
+    .then((data) => {
+      console.log("DATA: ", data);
+      if (data.length > 0) {
+        response.json("true");
+      } else {
+        response.json("false");
+      }
+    })
+    .catch((error) => {
+      console.log("An error occurred: ", error);
+      response.status(500).json(error);
+    });
+};
+
+/*
 returns true/false is an email has already been registered
 */
 const checkEmailAvailable = (request, response) => {
@@ -66,12 +86,13 @@ Create a new user in the DB
 */
 const createUser = (request, response) => {
   db.any(
-    "insert into users (username, password, email, admin) values ($1,$2,$3,$4)",
+    "insert into users (username, password, email, admin, datecreated) values ($1,$2,$3,$4,$5)",
     [
       request.body.username,
       request.body.password,
       request.body.email,
       request.body.admin,
+      new Date(),
     ]
   )
     .then((data) => {
