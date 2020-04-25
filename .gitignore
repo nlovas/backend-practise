@@ -6,6 +6,6 @@
 *.code-workspace
 api/config.js
 api/node_modules
-frontend/node_modules
+website/node_modules
 database.md
 website/.next
