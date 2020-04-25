@@ -83,19 +83,31 @@ const checkEmailAvailable = (request, response) => {
 
 /*
 Create a new user in the DB
+Also creates a corresponding row in the profiles table
 */
 const createUser = (request, response) => {
-  db.any(
-    "insert into users (username, password, email, admin, datecreated) values ($1,$2,$3,$4,$5)",
-    [
-      request.body.username,
-      request.body.password,
-      request.body.email,
-      request.body.admin,
-      new Date(),
-    ]
-  )
+  db.tx((t) => {
+    return t
+      .one(
+        "insert into users (username, password, email, admin, datecreated) values ($1,$2,$3,$4,$5) returning id",
+        [
+          request.body.username,
+          request.body.password,
+          request.body.email,
+          request.body.admin,
+          new Date(),
+        ]
+      )
+      .then((user) => {
+        return t.none(
+          "insert into profiles (id, description, avatar, country) values ($1,$2,$3,$4)",
+          [user.id, "", "", ""]
+        );
+      });
+  })
     .then((data) => {
+      console.log("success");
+      console.log(data);
       response.sendStatus(200);
     })
     .catch((error) => {
