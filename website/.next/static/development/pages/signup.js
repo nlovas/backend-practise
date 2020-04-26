@@ -21775,11 +21775,10 @@ var Signup = /*#__PURE__*/function (_React$Component) {
             password: fields.password,
             email: fields.email
           }).then(function (result) {
-            console.log("result was ", result);
-
             if (result.status === 200) {
-              //  Router.push("/about");
               console.log("account creation successful");
+
+              _this.props.router.push("/user/" + result.data);
             } else {//TODO: show the user an error message
             }
           });
@@ -22003,11 +22002,11 @@ var Signup = /*#__PURE__*/function (_React$Component) {
   return Signup;
 }(react__WEBPACK_IMPORTED_MODULE_10__["Component"]);
 
-/* harmony default export */ __webpack_exports__["default"] = (Signup);
+/* harmony default export */ __webpack_exports__["default"] = (Object(next_router__WEBPACK_IMPORTED_MODULE_11__["withRouter"])(Signup));
 
 /***/ }),
 
-/***/ 4:
+/***/ 2:
 /*!*******************************************************************************************************************************************************!*\
   !*** multi next-client-pages-loader?page=%2Fsignup&absolutePagePath=C%3A%5CUsers%5CUser%5CDocuments%5Cbackend-practise%5Cwebsite%5Cpages%5Csignup.js ***!
   \*******************************************************************************************************************************************************/
@@ -22030,5 +22029,5 @@ module.exports = dll_c2e10d183b950a67d9e7;
 
 /***/ })
 
-},[[4,"static/runtime/webpack.js"]]]);
+},[[2,"static/runtime/webpack.js"]]]);
 //# sourceMappingURL=signup.js.map

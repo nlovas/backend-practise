@@ -4,7 +4,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import * as React from "react";
-import { Router } from "next/router";
+import { withRouter } from "next/router";
 import Head from "next/head";
 
 const api = "http://localhost:8080";
@@ -25,10 +25,9 @@ class Signup extends React.Component {
             password: fields.password,
             email: fields.email,
           }).then((result) => {
-            console.log("result was ", result);
             if (result.status === 200) {
-              //  Router.push("/about");
               console.log("account creation successful");
+              this.props.router.push("/user/" + result.data);
             } else {
               //TODO: show the user an error message
             }
@@ -297,4 +296,4 @@ class Signup extends React.Component {
   }
 }
 
-export default Signup;
+export default withRouter(Signup);

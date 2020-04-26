@@ -88,7 +88,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -2601,11 +2601,10 @@ var Signup = /*#__PURE__*/function (_React$Component) {
             password: fields.password,
             email: fields.email
           }).then(function (result) {
-            console.log("result was ", result);
-
             if (result.status === 200) {
-              //  Router.push("/about");
               console.log("account creation successful");
+
+              _this.props.router.push("/user/" + result.data);
             } else {//TODO: show the user an error message
             }
           });
@@ -2829,11 +2828,11 @@ var Signup = /*#__PURE__*/function (_React$Component) {
   return Signup;
 }(react__WEBPACK_IMPORTED_MODULE_10__["Component"]);
 
-/* harmony default export */ __webpack_exports__["default"] = (Signup);
+/* harmony default export */ __webpack_exports__["default"] = (Object(next_router__WEBPACK_IMPORTED_MODULE_11__["withRouter"])(Signup));
 
 /***/ }),
 
-/***/ 6:
+/***/ 4:
 /*!*******************************!*\
   !*** multi ./pages/signup.js ***!
   \*******************************/

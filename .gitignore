@@ -8,5 +8,5 @@ api/config.js
 api/node_modules
 website/node_modules
 database.md
-website/.next
+website/.next/*
 

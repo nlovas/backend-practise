@@ -24,10 +24,11 @@ Returns true/false if a user exists with this username
 */
 const checkUsernameExistence = (request, response) => {
   console.log("checking username existance");
-  db.any("select id from users where username = $1", [request.params.username])
+  db.oneOrNone("select id from users where username = $1", [
+    request.params.username,
+  ])
     .then((data) => {
-      console.log("DATA: ", data);
-      if (data.length > 0) {
+      if (data) {
         response.json("true");
       } else {
         response.json("false");
@@ -43,15 +44,14 @@ const checkUsernameExistence = (request, response) => {
 For visiting a user's page. Return relevant information
 */
 const getUserProfile = (request, response) => {
-  console.log("getting user profile data");
-  db.any("select id from users where username = $1", [request.params.username])
+  console.log("username? ", request.params.username); // select blabla from users, profiles where id = id and username = $1
+  db.one(
+    "select username, datecreated, description, avatar, country from users, profiles where users.id = profiles.id and users.username = $1",
+    [request.params.username]
+  )
     .then((data) => {
-      console.log("DATA: ", data);
-      if (data.length > 0) {
-        response.json("true");
-      } else {
-        response.json("false");
-      }
+      console.log("data returned: ", data);
+      response.json(data);
     })
     .catch((error) => {
       console.log("An error occurred: ", error);
@@ -64,10 +64,9 @@ returns true/false is an email has already been registered
 */
 const checkEmailAvailable = (request, response) => {
   console.log(request.params);
-  db.any("select id from users where email = $1", [request.params.email])
+  db.oneOrNone("select id from users where email = $1", [request.params.email])
     .then((data) => {
-      console.log("DATA: ", data);
-      if (data.length > 0) {
+      if (data) {
         response.json("true");
       } else {
         response.json("false");
@@ -105,10 +104,10 @@ const createUser = (request, response) => {
         );
       });
   })
-    .then((data) => {
-      console.log("success");
-      console.log(data);
-      response.sendStatus(200);
+    .then(() => {
+      //response.sendStatus(200);
+      response.status(200);
+      response.json(request.body.username);
     })
     .catch((error) => {
       console.log("there was an error: ", error);
@@ -123,4 +122,5 @@ module.exports = {
   createUser,
   checkUsernameExistence,
   checkEmailAvailable,
+  getUserProfile,
 };

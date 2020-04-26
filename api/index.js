@@ -48,6 +48,8 @@ app.get("/users", cors(corsOptions), db.getUsers);
 
 app.get("/user/:username", cors(corsOptions), db.checkUsernameExistence);
 
+app.get("/user/profile/:username", cors(corsOptions), db.getUserProfile);
+
 app.get("/:email", cors(corsOptions), db.checkEmailAvailable);
 
 // ------------------------ POST REQUESTS ---------------------------
