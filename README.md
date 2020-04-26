@@ -9,7 +9,7 @@ This website acts as a social media for cosplayers! Users can show off their cos
 
 ## Libraries and etc
 
-### Front End
+### Website
 
 [Reactjs](https://reactjs.org/) | [Next.js](https://nextjs.org/) | [Formik](https://jaredpalmer.com/formik/) (With [Yup](https://github.com/jquense/yup)) | [Axios](https://github.com/axios/axios) | [SASS](https://sass-lang.com/)
 
@@ -29,13 +29,13 @@ This website acts as a social media for cosplayers! Users can show off their cos
 
 To run the backend, go to /api and use the command `node index.js`
 
-### Frontend
+### Website
 
-To run the frontend, go to /frontend and use the command `npm run dev`
+To run the website, go to /website and use the command `npm run dev`
 
 ### Testing
 
-To run the tests, go to /frontend and use the command `npm run test`
+To run the tests, go to /website and use the command `npm run test`
 
 ---
 
