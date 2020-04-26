@@ -5073,7 +5073,7 @@ var About = /*#__PURE__*/function (_React$Component) {
 
 /***/ }),
 
-/***/ 4:
+/***/ 3:
 /*!*****************************************************************************************************************************************************!*\
   !*** multi next-client-pages-loader?page=%2Fabout&absolutePagePath=C%3A%5CUsers%5CUser%5CDocuments%5Cbackend-practise%5Cwebsite%5Cpages%5Cabout.js ***!
   \*****************************************************************************************************************************************************/
@@ -5096,5 +5096,5 @@ module.exports = dll_c2e10d183b950a67d9e7;
 
 /***/ })
 
-},[[4,"static/runtime/webpack.js"]]]);
+},[[3,"static/runtime/webpack.js"]]]);
 //# sourceMappingURL=about.js.map
