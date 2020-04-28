@@ -267,7 +267,7 @@ class Signup extends React.Component {
                 <label htmlFor="email">Enter your email</label>
                 <Field
                   name="email"
-                  type="text"
+                  type="email"
                   placeholder="Enter an email"
                   className={
                     "form-control" +

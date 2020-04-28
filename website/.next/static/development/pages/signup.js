@@ -59,7 +59,9 @@ var Header = /*#__PURE__*/function (_React$Component) {
         href: "/signup"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__["createElement"]("a", null, "Sign up")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__["createElement"](next_link__WEBPACK_IMPORTED_MODULE_6___default.a, {
         href: "/login"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__["createElement"]("a", null, "Log In")));
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__["createElement"]("a", null, "Log In")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__["createElement"](next_link__WEBPACK_IMPORTED_MODULE_6___default.a, {
+        href: "/upload"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__["createElement"]("a", null, "Post")));
     }
   }]);
 
@@ -21985,7 +21987,7 @@ var Signup = /*#__PURE__*/function (_React$Component) {
           htmlFor: "email"
         }, "Enter your email"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_10__["createElement"](formik__WEBPACK_IMPORTED_MODULE_7__["Field"], {
           name: "email",
-          type: "text",
+          type: "email",
           placeholder: "Enter an email",
           className: "form-control" + (props.errors.email && props.touched.email ? " is-invalid" : "")
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_10__["createElement"](formik__WEBPACK_IMPORTED_MODULE_7__["ErrorMessage"], {
@@ -22006,7 +22008,7 @@ var Signup = /*#__PURE__*/function (_React$Component) {
 
 /***/ }),
 
-/***/ 2:
+/***/ 1:
 /*!*******************************************************************************************************************************************************!*\
   !*** multi next-client-pages-loader?page=%2Fsignup&absolutePagePath=C%3A%5CUsers%5CUser%5CDocuments%5Cbackend-practise%5Cwebsite%5Cpages%5Csignup.js ***!
   \*******************************************************************************************************************************************************/
@@ -22029,5 +22031,5 @@ module.exports = dll_c2e10d183b950a67d9e7;
 
 /***/ })
 
-},[[2,"static/runtime/webpack.js"]]]);
+},[[1,"static/runtime/webpack.js"]]]);
 //# sourceMappingURL=signup.js.map

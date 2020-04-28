@@ -18,6 +18,9 @@ class Header extends React.Component {
         <Link href="/login">
           <a>Log In</a>
         </Link>
+        <Link href="/upload">
+          <a>Post</a>
+        </Link>
       </div>
     );
   }

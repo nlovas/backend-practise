@@ -27,6 +27,10 @@
     "/user/[userid]": [
       "static/runtime/webpack.js",
       "static/runtime/main.js"
+    ],
+    "/user/editprofile": [
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
     ]
   }
 }

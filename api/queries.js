@@ -42,11 +42,12 @@ const checkUsernameExistence = (request, response) => {
 
 /*
 For visiting a user's page. Return relevant information
+does not return namechanges
 */
 const getUserProfile = (request, response) => {
   console.log("username? ", request.params.username); // select blabla from users, profiles where id = id and username = $1
   db.one(
-    "select username, datecreated, description, avatar, country from users, profiles where users.id = profiles.id and users.username = $1",
+    "select username, datecreated, description, avatar, country, showdatecreated from users, profiles where users.id = profiles.id and users.username = $1",
     [request.params.username]
   )
     .then((data) => {
@@ -85,12 +86,17 @@ Create a new user in the DB
 Also creates a corresponding row in the profiles table
 */
 const createUser = (request, response) => {
+  //capitalize username
+  var capitalizedName =
+    request.body.username.charAt(0).toUpperCase() +
+    request.body.username.slice(1);
+
   db.tx((t) => {
     return t
       .one(
         "insert into users (username, password, email, admin, datecreated) values ($1,$2,$3,$4,$5) returning id",
         [
-          request.body.username,
+          capitalizedName,
           request.body.password,
           request.body.email,
           request.body.admin,
@@ -99,15 +105,15 @@ const createUser = (request, response) => {
       )
       .then((user) => {
         return t.none(
-          "insert into profiles (id, description, avatar, country) values ($1,$2,$3,$4)",
-          [user.id, "", "", ""]
+          "insert into profiles (id, description, avatar, country, showdatecreated, namechanges) values ($1,$2,$3,$4,$5,$6)",
+          [user.id, "", "", "", true, 0]
         );
       });
   })
     .then(() => {
       //response.sendStatus(200);
       response.status(200);
-      response.json(request.body.username);
+      response.json(capitalizedName);
     })
     .catch((error) => {
       console.log("there was an error: ", error);

@@ -14,8 +14,8 @@ class Index extends React.Component {
         <Header />
         <h1>Welcome to the Island!</h1>
         <div>
-          <Link href="/user/[userid]" as="/user/niwwi">
-            <a>Niwwi is a test user</a>
+          <Link href="/user/[userid]" as="/user/niwwio">
+            <a>Niwwio is a test user</a>
           </Link>
           <div>
             Welcome to Isle of Cosplay! A community* of cosplayers sharing their
