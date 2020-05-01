@@ -47,7 +47,7 @@ does not return namechanges
 const getUserProfile = (request, response) => {
   console.log("username? ", request.params.username); // select blabla from users, profiles where id = id and username = $1
   db.one(
-    "select username, datecreated, description, avatar, country, showdatecreated from users, profiles where users.id = profiles.id and users.username = $1",
+    "select username, datecreated, description, encode(avatar,'base64') as avatar, country, showdatecreated from users, profiles where users.id = profiles.id and users.username = $1",
     [request.params.username]
   )
     .then((data) => {

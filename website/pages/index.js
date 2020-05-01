@@ -14,7 +14,7 @@ class Index extends React.Component {
         <Header />
         <h1>Welcome to the Island!</h1>
         <div>
-          <Link href="/user/[userid]" as="/user/niwwio">
+          <Link href="/user/[userid]" as="/user/Niwwio">
             <a>Niwwio is a test user</a>
           </Link>
           <div>

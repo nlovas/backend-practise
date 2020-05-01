@@ -7,11 +7,7 @@ class Footer extends React.Component {
     return (
       <div>
         This is the footer
-        <div>
-          TODO: Flag icons (https://www.iconfinder.com/iconsets/ensign-11) by
-          https://www.iconfinder.com/Mr.hopnguyen licensed by
-          https://creativecommons.org/licenses/by/3.0/
-        </div>
+        <div></div>
       </div>
     );
   }

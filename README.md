@@ -51,6 +51,8 @@ To run the tests, go to /website and use the command `npm run test`
 - [Unit test Next.js with Jest and Enzyme](https://medium.com/@miiny/unit-test-next-js-with-jest-and-enzyme-5b305a8e29fe)
 - [Testing React with Jest and Enzyme I](https://medium.com/codeclan/testing-react-with-jest-and-enzyme-20505fec4675)
 - [Client-side vs. Server-side vs. Pre-rendering for Web Apps](https://www.toptal.com/front-end/client-side-vs-server-side-pre-rendering)
+- [Google Material Icons](https://material.io/resources/icons/?style=baseline)
+- [Favicon Generator](https://realfavicongenerator.net/)
 
 ### Misc Notes:
 

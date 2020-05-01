@@ -52,6 +52,9 @@ class About extends React.Component {
           and series on hand. I'd also like to be able to tag certain parts of a
           costume for a character.
         </div>
+        Attribution Icons from Google Material Icons
+        (https://material.io/resources/icons/?style=baseline) under the Apache
+        License 2.0 (http://www.apache.org/licenses/LICENSE-2.0.txt)
       </div>
     );
   }

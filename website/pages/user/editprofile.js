@@ -66,9 +66,7 @@ class EditProfile extends React.Component {
                 />
                 <ErrorMessage name="description" component="div" />
                 <label htmlFor="location">Location</label>
-                <Field name="location" as="select">
-                  <option value="">Don't Show Location</option>
-                </Field>
+                <Field name="location" placeholder="Eg) Canada, Florida" />
                 <ErrorMessage name="location" component="div" />
                 <label htmlFor="showdate">
                   Display Date of Account Creation
