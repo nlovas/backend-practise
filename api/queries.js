@@ -24,7 +24,7 @@ Returns true/false if a user exists with this username
 */
 const checkUsernameExistence = (request, response) => {
   console.log("checking username existance");
-  db.oneOrNone("select id from users where username = $1", [
+  db.oneOrNone("select id from users where username = lower($1)", [
     request.params.username,
   ])
     .then((data) => {
@@ -41,13 +41,12 @@ const checkUsernameExistence = (request, response) => {
 };
 
 /*
-For visiting a user's page. Return relevant information
-does not return namechanges
+Get a user's profile information. Returns username and everything for that user from the profiles table
 */
 const getUserProfile = (request, response) => {
-  console.log("username? ", request.params.username); // select blabla from users, profiles where id = id and username = $1
+  console.log("username? ", request.params.username);
   db.one(
-    "select username, datecreated, description, encode(avatar,'base64') as avatar, country, showdatecreated from users, profiles where users.id = profiles.id and users.username = $1",
+    "select username, datecreated, description, encode(avatar,'base64') as avatar, country, showdatecreated, namechanges from users, profiles where users.id = profiles.id and users.username = lower($1)",
     [request.params.username]
   )
     .then((data) => {
@@ -65,7 +64,9 @@ returns true/false is an email has already been registered
 */
 const checkEmailAvailable = (request, response) => {
   console.log(request.params);
-  db.oneOrNone("select id from users where email = $1", [request.params.email])
+  db.oneOrNone("select id from users where email = lower($1)", [
+    request.params.email,
+  ])
     .then((data) => {
       if (data) {
         response.json("true");
@@ -86,17 +87,12 @@ Create a new user in the DB
 Also creates a corresponding row in the profiles table
 */
 const createUser = (request, response) => {
-  //capitalize username
-  var capitalizedName =
-    request.body.username.charAt(0).toUpperCase() +
-    request.body.username.slice(1);
-
   db.tx((t) => {
     return t
       .one(
-        "insert into users (username, password, email, admin, datecreated) values ($1,$2,$3,$4,$5) returning id",
+        "insert into users (username, password, email, admin, datecreated) values (lower($1),$2,lower($3),$4,$5) returning id",
         [
-          capitalizedName,
+          request.body.username,
           request.body.password,
           request.body.email,
           request.body.admin,
@@ -113,7 +109,7 @@ const createUser = (request, response) => {
     .then(() => {
       //response.sendStatus(200);
       response.status(200);
-      response.json(capitalizedName);
+      response.json(request.body.username.toLowerCase());
     })
     .catch((error) => {
       console.log("there was an error: ", error);

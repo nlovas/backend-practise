@@ -10,29 +10,9 @@ class User extends React.Component {
     super(props);
   }
 
-  render() {
-    return (
-      <div>
-        <Head>
-          <title>{this.props.username}'s Page</title>
-        </Head>
-        <Header />
-        <div>
-          {this.insertAvatar()}
-          <h1>{this.props.username}</h1>
-          {this.insertCountry()}
-          {this.insertDateJoined()}
-        </div>
-        <div>{this.props.description}</div>
-
-        <div>
-          <Link href="/user/editprofile">
-            <button>Edit</button>
-          </Link>
-          <button>Follow</button>
-        </div>
-      </div>
-    );
+  componentDidUpdate(prevProps) {
+    console.log("updated!");
+    console.log(prevProps);
   }
 
   /*
@@ -64,9 +44,9 @@ class User extends React.Component {
   }
 
   /*
-  If the user has an avatar, display it
-  Otherwise, use a default 100x100px image
-  */
+If the user has an avatar, display it
+Otherwise, use a default 100x100px image
+*/
   insertAvatar() {
     if (this.props.avatar) {
       console.log("there is an avatar", this.props.avatar);
@@ -106,6 +86,46 @@ otherwise, return nothing
       return;
     }
   }
+
+  render() {
+    console.log(this.props.query);
+    return (
+      <div>
+        <Head>
+          <title>{this.props.username}'s Page</title>
+        </Head>
+        <Header />
+        <div>
+          {this.insertAvatar()}
+          <h1>{this.props.username}</h1>
+          {this.insertCountry()}
+          {this.insertDateJoined()}
+        </div>
+        <div>{this.props.description}</div>
+
+        <div>
+          <Link
+            href="/user/editprofile"
+            as={`/user/${this.props.username}/editprofile`}
+            //{{
+            /*pathname: `/user/${this.props.username}/editprofile`
+                        query: {
+                username: this.props.username,
+                datecreated: this.props.datecreated,
+                description: this.props.description,
+                avatar: this.props.avatar,
+                country: this.props.country,
+                showdatecreated: this.props.showdatecreated,
+              },
+            }}*/
+          >
+            <button>Edit</button>
+          </Link>
+          <button>Follow</button>
+        </div>
+      </div>
+    );
+  }
 }
 
 /*
@@ -114,6 +134,7 @@ Calls the api to get what we need to populate the page
 */
 export async function getServerSideProps(context) {
   console.log(context);
+  //var slug = withRouter().query.slug || [];
   return new Promise((resolve, reject) => {
     axios({
       method: "get",
@@ -150,3 +171,39 @@ export async function getServerSideProps(context) {
 }
 
 export default User;
+
+/*
+Stack Overflow Post
+
+
+title: NextJS Dynamic Route Segment
+
+Hello, new to react and NextJS.
+
+I understand the way that dynamic routing is handled in NextJS is by creating a file in the pages directory like so:
+
+pages/[user].js becomes localhost/:user
+
+But I have looked through the documentation for routing and haven't seen an *example* for a dynamic route *segment* specifically (Aside from this brief mention https://nextjs.org/docs/routing/introduction#dynamic-route-segments)
+ie) 
+localhost/:user/settings
+or
+localhost/:category/manuals/:id
+
+What would those look like in the pages directory? 
+In the first example's case, using pages/[user].js and pages/settings.js wouldn't be right because it means a user could go to localhost/settings instead of localhost/:user/settings
+
+Taking a different approach, is the best practise to handle dynamic routing segments to use a data fetching function like getServerSideProps?
+eg:
+
+(Using [...user].js in order to catch all parameters)
+
+export async function getServerSideProps(context) {
+
+  //handle context.query array items
+
+}
+
+SOLVED look at this https://github.com/zeit/next-site/blob/master/pages/docs/%5B...slug%5D.js
+
+*/
