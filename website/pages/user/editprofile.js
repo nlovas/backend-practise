@@ -16,6 +16,7 @@ class EditProfile extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     return (
       <div>
         <Head>
@@ -82,10 +83,10 @@ class EditProfile extends React.Component {
     );
   }
 }
-/*
+
 export async function getServerSideProps(context) {
   console.log(context);
-  return new Promise((resolve, reject) => {
+  /*   return new Promise((resolve, reject) => {
     axios({
       method: "get",
       url: "http://localhost:8080/user/profile/" + context.params.userid,
@@ -117,10 +118,6 @@ export async function getServerSideProps(context) {
         resolve(error);
       }
     );
-  });
+  });*/
 }
-*/
-/*
-Called on every request -- TODO: see if we can avoid making this call if user was previously viewing their profile
-Calls the api to get what we need to populate the page
-*/ export default EditProfile;
+export default EditProfile;

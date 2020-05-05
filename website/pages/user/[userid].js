@@ -10,11 +10,6 @@ class User extends React.Component {
     super(props);
   }
 
-  componentDidUpdate(prevProps) {
-    console.log("updated!");
-    console.log(prevProps);
-  }
-
   /*
   If the user has chosen a country, display it with a flag icon
   Otherwise, return nothing
@@ -105,11 +100,9 @@ otherwise, return nothing
 
         <div>
           <Link
-            href="/user/editprofile"
-            as={`/user/${this.props.username}/editprofile`}
-            //{{
-            /*pathname: `/user/${this.props.username}/editprofile`
-                        query: {
+            href={{
+              pathname: "/user/editprofile",
+              query: {
                 username: this.props.username,
                 datecreated: this.props.datecreated,
                 description: this.props.description,
@@ -117,7 +110,9 @@ otherwise, return nothing
                 country: this.props.country,
                 showdatecreated: this.props.showdatecreated,
               },
-            }}*/
+            }}
+            as={`/user/${this.props.username}/editprofile`}
+            shallow={true}
           >
             <button>Edit</button>
           </Link>
