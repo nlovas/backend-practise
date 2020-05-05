@@ -11,6 +11,17 @@ class EditProfile extends React.Component {
     super(props);
   }
 
+  static async getInitialProps(ctx) {
+    console.log("ctx???", ctx);
+    return {
+      username: ctx.query.username,
+      avatar: ctx.query.avatar,
+      country: ctx.query.country,
+      description: ctx.query.description,
+      showdatecreated: ctx.query.showdatecreated,
+    };
+  }
+
   submitForm(fields, actions) {
     console.log("the form was submitted");
   }
@@ -84,8 +95,10 @@ class EditProfile extends React.Component {
   }
 }
 
-export async function getServerSideProps(context) {
-  console.log(context);
+/*export async function getServerSideProps(context) {
+  console.log("anything? ", context.params);
+  console.log("here?? ", context.query);
+  return { props: { username: "blah" } };
   /*   return new Promise((resolve, reject) => {
     axios({
       method: "get",
@@ -119,5 +132,5 @@ export async function getServerSideProps(context) {
       }
     );
   });*/
-}
+//}
 export default EditProfile;

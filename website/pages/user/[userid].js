@@ -83,7 +83,6 @@ otherwise, return nothing
   }
 
   render() {
-    console.log(this.props.query);
     return (
       <div>
         <Head>
@@ -104,15 +103,14 @@ otherwise, return nothing
               pathname: "/user/editprofile",
               query: {
                 username: this.props.username,
-                datecreated: this.props.datecreated,
                 description: this.props.description,
                 avatar: this.props.avatar,
                 country: this.props.country,
                 showdatecreated: this.props.showdatecreated,
               },
             }}
-            as={`/user/${this.props.username}/editprofile`}
-            shallow={true}
+            as={"/user/editprofile"}
+            //  shallow={true}
           >
             <button>Edit</button>
           </Link>
