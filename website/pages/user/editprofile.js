@@ -19,7 +19,30 @@ class EditProfile extends React.Component {
       country: ctx.query.country,
       description: ctx.query.description,
       showdatecreated: ctx.query.showdatecreated,
+      namechanges: ctx.query.namechanges,
     };
+  }
+
+  /*
+If the user has an avatar, display it
+Otherwise, use a default 100x100px image
+*/
+  insertAvatar() {
+    if (this.props.avatar) {
+      console.log("there is an avatar", this.props.avatar);
+      return (
+        <div>
+          <img src={`data:image/jpeg;base64,${this.props.avatar}`} />
+        </div>
+      );
+    } else {
+      console.log("there is no avatar");
+      return (
+        <div>
+          <img src="/images/testimg.png" />
+        </div>
+      );
+    }
   }
 
   submitForm(fields, actions) {
@@ -59,14 +82,17 @@ class EditProfile extends React.Component {
                   Change Username (
                   <strong>You may only change your username 3 times</strong>)
                 </label>
-                <Field name="username" placeholder="Username" />
+                <Field name="username" value={this.props.username} />
                 <ErrorMessage name="username" component="div" />
-                <div>You have changed your username _ times</div>
+                <div>
+                  You have changed your username {this.props.namechanges} times
+                </div>
                 <label htmlFor="password">Change Password</label>
                 <Field name="password" placeholder="Password" />
                 <ErrorMessage name="password" component="div" />
               </div>
               <div>
+                {this.insertAvatar()}
                 <label htmlFor="avatar">Upload an Avatar</label>
                 <Field name="avatar" type="file" />
                 <ErrorMessage name="avatar" component="div" />
@@ -74,16 +100,25 @@ class EditProfile extends React.Component {
                 <Field
                   name="description"
                   as="textarea"
+                  value={this.props.description}
                   placeholder="Introduce yourself..."
                 />
                 <ErrorMessage name="description" component="div" />
                 <label htmlFor="location">Location</label>
-                <Field name="location" placeholder="Eg) Canada, Florida" />
+                <Field
+                  name="location"
+                  value={this.props.country}
+                  placeholder="Eg) Canada, Florida"
+                />
                 <ErrorMessage name="location" component="div" />
                 <label htmlFor="showdate">
                   Display Date of Account Creation
                 </label>
-                <Field name="showdate" type="checkbox" />
+                <Field
+                  name="showdate"
+                  value={this.props.showdatecreated}
+                  type="checkbox"
+                />
                 <ErrorMessage name="showdate" component="div" />
               </div>
               <button type="submit">Finish</button>

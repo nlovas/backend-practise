@@ -107,6 +107,7 @@ otherwise, return nothing
                 avatar: this.props.avatar,
                 country: this.props.country,
                 showdatecreated: this.props.showdatecreated,
+                namechanges: this.props.namechanges,
               },
             }}
             as={"/user/editprofile"}
@@ -146,6 +147,7 @@ export async function getServerSideProps(context) {
             avatar: response.data.avatar,
             country: response.data.country,
             showdatecreated: response.data.showdatecreated,
+            namechanges: response.data.namechanges,
           },
         };
         resolve(props);
