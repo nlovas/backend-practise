@@ -11,17 +11,24 @@ class EditProfile extends React.Component {
     super(props);
   }
 
-  static async getInitialProps(ctx) {
-    console.log("ctx???", ctx);
+  /* static async getInitialProps(ctx) {
+    console.log("query?", ctx.query);
+    //var parsed = JSON.parse(ctx.query);
+    console.log("typeof query ", typeof ctx.query);
+    console.log(
+      "is showdatecreated a boolean? ",
+      typeof ctx.query.showdatecreated === "boolean"
+    );
     return {
       username: ctx.query.username,
       avatar: ctx.query.avatar,
-      country: ctx.query.country,
+      location: ctx.query.location,
       description: ctx.query.description,
       showdatecreated: ctx.query.showdatecreated,
       namechanges: ctx.query.namechanges,
+      email: ctx.query.email,
     };
-  }
+  }*/
 
   /*
 If the user has an avatar, display it
@@ -47,6 +54,11 @@ Otherwise, use a default 100x100px image
 
   submitForm(fields, actions) {
     console.log("the form was submitted");
+    console.log(this.props.showdatecreated);
+    console.log(
+      this.props.showdatecreated == true,
+      this.props.showdatecreated === true
+    );
   }
 
   render() {
@@ -61,15 +73,17 @@ Otherwise, use a default 100x100px image
         <Formik
           initialValues={{
             username: "",
-            password: "",
-            country: "",
+            newPassword: "",
+            currentPassword: "",
+            email: "",
+            location: "",
             avatar: "",
             description: "",
             displaydatejoined: "",
           }}
           validationSchema={Yup.object().shape({
-            username: Yup.string().required("Required"),
-            password: Yup.string().required("Required"),
+            // username: Yup.string().required("Required"),
+            // password: Yup.string().required("Required"),
           })}
           onSubmit={async (fields, actions) => {
             this.submitForm(fields, actions);
@@ -77,20 +91,6 @@ Otherwise, use a default 100x100px image
         >
           {(props) => (
             <Form>
-              <div>
-                <label htmlFor="username">
-                  Change Username (
-                  <strong>You may only change your username 3 times</strong>)
-                </label>
-                <Field name="username" value={this.props.username} />
-                <ErrorMessage name="username" component="div" />
-                <div>
-                  You have changed your username {this.props.namechanges} times
-                </div>
-                <label htmlFor="password">Change Password</label>
-                <Field name="password" placeholder="Password" />
-                <ErrorMessage name="password" component="div" />
-              </div>
               <div>
                 {this.insertAvatar()}
                 <label htmlFor="avatar">Upload an Avatar</label>
@@ -107,7 +107,7 @@ Otherwise, use a default 100x100px image
                 <label htmlFor="location">Location</label>
                 <Field
                   name="location"
-                  value={this.props.country}
+                  value={this.props.location}
                   placeholder="Eg) Canada, Florida"
                 />
                 <ErrorMessage name="location" component="div" />
@@ -116,10 +116,32 @@ Otherwise, use a default 100x100px image
                 </label>
                 <Field
                   name="showdate"
-                  value={this.props.showdatecreated}
+                  value="showdate"
                   type="checkbox"
+                  checked={this.props.showdatecreated}
                 />
                 <ErrorMessage name="showdate" component="div" />
+              </div>
+              <div>
+                <label htmlFor="username">
+                  Change Username (
+                  <strong>You may only change your username 3 times</strong>)
+                </label>
+                <Field name="username" value={this.props.username} />
+                <ErrorMessage name="username" component="div" />
+                <div>
+                  You have changed your username {this.props.namechanges} times
+                </div>
+                Change Password
+                <label htmlFor="newPassword">New Password</label>
+                <Field name="newPassword" placeholder="New Password" />
+                <ErrorMessage name="newPassword" component="div" />
+                <label htmlFor="currentPassword">Current Password</label>
+                <Field name="currentPassword" placeholder="Current Password" />
+                <ErrorMessage name="currentPassword" component="div" />
+                <label htmlFor="email">Change Email</label>
+                <Field name="email" value={this.props.email} />
+                <ErrorMessage name="email" component="div" />
               </div>
               <button type="submit">Finish</button>
             </Form>
@@ -130,28 +152,37 @@ Otherwise, use a default 100x100px image
   }
 }
 
-/*export async function getServerSideProps(context) {
-  console.log("anything? ", context.params);
-  console.log("here?? ", context.query);
-  return { props: { username: "blah" } };
-  /*   return new Promise((resolve, reject) => {
+/*
+Called on every request
+Calls the api to get what we need to populate the page
+TODO: do this without using query, once weve implemented using cookies later. For now this will allow editing of anyone's profile
+*/
+export async function getServerSideProps(context) {
+  // console.log("QUERY:", context.query);
+  return new Promise((resolve, reject) => {
     axios({
       method: "get",
-      url: "http://localhost:8080/user/profile/" + context.params.userid,
+      url: "http://localhost:8080/user/editprofile/" + context.query.userid,
       params: {
-        username: context.params.userid,
+        username: context.query.userid,
       },
     }).then(
       (response) => {
-        console.log(response);
+        console.log(response.data);
+        console.log(
+          "is showdatecreated a boolean? ",
+          typeof response.data.showdatecreated === "boolean"
+        );
         var props = {
           props: {
             username: response.data.username,
             datecreated: response.data.datecreated,
             description: response.data.description,
             avatar: response.data.avatar,
-            country: response.data.country,
+            location: response.data.location,
             showdatecreated: response.data.showdatecreated,
+            namechanges: response.data.namechanges,
+            email: response.data.email,
           },
         };
         resolve(props);
@@ -166,6 +197,6 @@ Otherwise, use a default 100x100px image
         resolve(error);
       }
     );
-  });*/
-//}
+  });
+}
 export default EditProfile;

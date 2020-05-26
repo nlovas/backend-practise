@@ -11,12 +11,12 @@ class User extends React.Component {
   }
 
   /*
-  If the user has chosen a country, display it with a flag icon
+  If the user has written a location, show it with the location icon
   Otherwise, return nothing
   */
-  insertCountry() {
-    if (this.props.country) {
-      console.log("there is a country");
+  insertLocation() {
+    if (this.props.location) {
+      console.log("there is a location");
       return (
         <div>
           <svg
@@ -29,11 +29,11 @@ class User extends React.Component {
             <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
             <path d="M0 0h24v24H0z" fill="none" />
           </svg>
-          Test country
+          Test location
         </div>
       );
     } else {
-      console.log("there is no country");
+      console.log("there is no location");
       return;
     }
   }
@@ -92,7 +92,7 @@ otherwise, return nothing
         <div>
           {this.insertAvatar()}
           <h1>{this.props.username}</h1>
-          {this.insertCountry()}
+          {this.insertLocation()}
           {this.insertDateJoined()}
         </div>
         <div>{this.props.description}</div>
@@ -102,16 +102,17 @@ otherwise, return nothing
             href={{
               pathname: "/user/editprofile",
               query: {
-                username: this.props.username,
+                userid: this.props.userid,
+                /*  username: this.props.username,
                 description: this.props.description,
                 avatar: this.props.avatar,
-                country: this.props.country,
+                location: this.props.location,
                 showdatecreated: this.props.showdatecreated,
                 namechanges: this.props.namechanges,
+                email: this.props.email,*/
               },
             }}
             as={"/user/editprofile"}
-            //  shallow={true}
           >
             <button>Edit</button>
           </Link>
@@ -127,8 +128,6 @@ Called on every request
 Calls the api to get what we need to populate the page
 */
 export async function getServerSideProps(context) {
-  console.log(context);
-  //var slug = withRouter().query.slug || [];
   return new Promise((resolve, reject) => {
     axios({
       method: "get",
@@ -138,16 +137,16 @@ export async function getServerSideProps(context) {
       },
     }).then(
       (response) => {
-        console.log(response);
+        console.log(response.data);
         var props = {
           props: {
+            userid: context.params.userid,
             username: response.data.username,
             datecreated: response.data.datecreated,
             description: response.data.description,
             avatar: response.data.avatar,
-            country: response.data.country,
+            location: response.data.location,
             showdatecreated: response.data.showdatecreated,
-            namechanges: response.data.namechanges,
           },
         };
         resolve(props);
@@ -166,39 +165,3 @@ export async function getServerSideProps(context) {
 }
 
 export default User;
-
-/*
-Stack Overflow Post
-
-
-title: NextJS Dynamic Route Segment
-
-Hello, new to react and NextJS.
-
-I understand the way that dynamic routing is handled in NextJS is by creating a file in the pages directory like so:
-
-pages/[user].js becomes localhost/:user
-
-But I have looked through the documentation for routing and haven't seen an *example* for a dynamic route *segment* specifically (Aside from this brief mention https://nextjs.org/docs/routing/introduction#dynamic-route-segments)
-ie) 
-localhost/:user/settings
-or
-localhost/:category/manuals/:id
-
-What would those look like in the pages directory? 
-In the first example's case, using pages/[user].js and pages/settings.js wouldn't be right because it means a user could go to localhost/settings instead of localhost/:user/settings
-
-Taking a different approach, is the best practise to handle dynamic routing segments to use a data fetching function like getServerSideProps?
-eg:
-
-(Using [...user].js in order to catch all parameters)
-
-export async function getServerSideProps(context) {
-
-  //handle context.query array items
-
-}
-
-SOLVED look at this https://github.com/zeit/next-site/blob/master/pages/docs/%5B...slug%5D.js
-
-*/

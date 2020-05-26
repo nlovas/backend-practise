@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import * as React from "react";
 import Link from "next/link";
+import { withRouter } from "next/router";
 import Head from "next/head";
 
 const api = "http://localhost:8080";
@@ -14,7 +15,16 @@ class Login extends React.Component {
   }
 
   submitForm(fields, actions) {
-    console.log("the form was submitted");
+    this.checkCredentials(fields.username, fields.password).then((isMatch) => {
+      if (isMatch) {
+        //allow login, move them to the next page
+        //TODO: cookies
+        console.log("credentials match! :)");
+        this.props.router.push("/user/[userid]", "/user/" + fields.username);
+      } else {
+        //credentials dont match, show them a message
+      }
+    });
   }
 
   /*
@@ -22,10 +32,11 @@ class Login extends React.Component {
   TODO hash the password
   */
   checkCredentials(username, password) {
+    console.log("username and pw? ", username, password);
     return new Promise((resolve, reject) => {
       axios({
         method: "get",
-        url: "http://localhost:8080/" + username,
+        url: "http://localhost:8080/login",
         params: {
           username: username,
           password: password,
@@ -91,4 +102,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default withRouter(Login);

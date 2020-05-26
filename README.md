@@ -15,7 +15,7 @@ This website acts as a social media for cosplayers! Users can show off their cos
 
 ### Back End
 
-[Postgres](https://www.postgresql.org/) | [Express](https://expressjs.com/) (Node) | [pg-promise](https://github.com/vitaly-t/pg-promise)
+[Postgres](https://www.postgresql.org/) | [Express](https://expressjs.com/) (Node) | [pg-promise](https://github.com/vitaly-t/pg-promise) | Nodemon | JSON Web Tokens | env-cmd
 
 ### Testing
 
@@ -27,7 +27,7 @@ This website acts as a social media for cosplayers! Users can show off their cos
 
 ### Backend
 
-To run the backend, go to /api and use the command `node index.js`
+To run the backend, go to /api and use the command `npm start`
 
 ### Website
 
@@ -53,6 +53,7 @@ To run the tests, go to /website and use the command `npm run test`
 - [Client-side vs. Server-side vs. Pre-rendering for Web Apps](https://www.toptal.com/front-end/client-side-vs-server-side-pre-rendering)
 - [Google Material Icons](https://material.io/resources/icons/?style=baseline)
 - [Favicon Generator](https://realfavicongenerator.net/)
+- [JWT Authentication & Authorization in NodeJs/Express & MongoDB REST APIs(2019)](https://medium.com/swlh/jwt-authentication-authorization-in-nodejs-express-mongodb-rest-apis-2019-ad14ec818122)
 
 ### Misc Notes:
 

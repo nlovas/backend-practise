@@ -41,12 +41,33 @@ const checkUsernameExistence = (request, response) => {
 };
 
 /*
-Get a user's profile information. Returns username and everything for that user from the profiles table
+Get a user's profile information. 
+Returns username and everything for that user from the profiles table that can be seen by another user
 */
 const getUserProfile = (request, response) => {
   console.log("username? ", request.params.username);
   db.one(
-    "select username, datecreated, description, encode(avatar,'base64') as avatar, country, showdatecreated, namechanges from users, profiles where users.id = profiles.id and users.username = lower($1)",
+    "select username, datecreated, description, encode(avatar,'base64') as avatar, location, showdatecreated from users, profiles where users.id = profiles.id and users.username = lower($1)",
+    [request.params.username]
+  )
+    .then((data) => {
+      console.log("data returned: ", data);
+      response.json(data);
+    })
+    .catch((error) => {
+      console.log("An error occurred: ", error);
+      response.status(500).json(error);
+    });
+};
+
+/*
+Get a user's profile information. 
+Returns username and everything for that user from the profiles table needed to edit profile
+*/
+const getEditProfile = (request, response) => {
+  console.log("username? ", request.params.username);
+  db.one(
+    "select username, email, datecreated, description, encode(avatar,'base64') as avatar, location, showdatecreated namechanges from users, profiles where users.id = profiles.id and users.username = lower($1)",
     [request.params.username]
   )
     .then((data) => {
@@ -66,6 +87,29 @@ const checkEmailAvailable = (request, response) => {
   console.log(request.params);
   db.oneOrNone("select id from users where email = lower($1)", [
     request.params.email,
+  ])
+    .then((data) => {
+      if (data) {
+        response.json("true");
+      } else {
+        response.json("false");
+      }
+    })
+    .catch((error) => {
+      console.log("An error occurred: ", error);
+      response.status(500).json(error);
+    });
+};
+
+/*
+returns true/false if the password and username match
+TODO: update security on this
+*/
+const checkLogin = (request, response) => {
+  console.log(request.params);
+  db.oneOrNone("select id from users where username = $1 and password = $2", [
+    request.params.username,
+    request.params.password,
   ])
     .then((data) => {
       if (data) {
@@ -101,7 +145,7 @@ const createUser = (request, response) => {
       )
       .then((user) => {
         return t.none(
-          "insert into profiles (id, description, avatar, country, showdatecreated, namechanges) values ($1,$2,$3,$4,$5,$6)",
+          "insert into profiles (id, description, avatar, location, showdatecreated, namechanges) values ($1,$2,$3,$4,$5,$6)",
           [user.id, "", "", "", true, 0]
         );
       });
@@ -119,10 +163,22 @@ const createUser = (request, response) => {
   //response.send(request.body.username);
 };
 
+// ----------------------- UPDATE REQUESTS ------------------------------
+
+/*
+The user is editing their profile
+Any of the following might be changed in the process:
+Username, password, email, description, avatar, location
+*/
+const updateProfile = (request, response) => {};
+
 module.exports = {
   getUsers,
   createUser,
   checkUsernameExistence,
   checkEmailAvailable,
+  checkLogin,
   getUserProfile,
+  getEditProfile,
+  updateProfile,
 };
