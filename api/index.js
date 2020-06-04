@@ -4,23 +4,8 @@ const db = require("./queries");
 //const { apiConfig } = require("./config");
 const app = express();
 const cors = require("cors");
-const bcrypt = require("bcrypt");
 const port = process.env.PORT;
-
-/*
-Where i left off:
-JWT: https://jwt.io/introduction/
-Trying to decide how to do authentication. A lot of websites are trying to peddle their product.
-This one doesnt use passport:
-https://medium.com/swlh/jwt-authentication-authorization-in-nodejs-express-mongodb-rest-apis-2019-ad14ec818122
-look into passport more to use JWT!!
-Probably need to uninstall some of the things u downloaded from https://medium.com/@timtamimi/getting-started-with-authentication-in-node-js-with-passport-and-postgresql-2219664b568c
-This one doesnt use passport:
-https://medium.com/quick-code/handling-authentication-and-authorization-with-node-7f9548fedde8
-This one doesnt use passport, not sure when it was written:
-https://www.toptal.com/nodejs/secure-rest-api-in-nodejs
-research passport a bit more, seems like itd be best if i needed oAuth tho
-*/
+const { generateJWT, authorize } = require("./middleware/auth");
 
 app.use(bodyParser.json());
 app.use(
@@ -64,8 +49,6 @@ app.get("/", (request, response) => {
 
 app.get("/users", cors(corsOptions), db.getUsers);
 
-app.get("/login", cors(corsOptions), db.checkLogin);
-
 app.get("/user/:username", cors(corsOptions), db.checkUsernameExistence);
 
 app.get("/user/profile/:username", cors(corsOptions), db.getUserProfile);
@@ -76,7 +59,27 @@ app.get("/:email", cors(corsOptions), db.checkEmailAvailable);
 
 // ------------------------ POST REQUESTS ---------------------------
 
-app.post("/create-user", cors(corsOptions), db.createUser);
+app.post("/create-user", cors(corsOptions), (req, res) => {
+  db.createUser(req, res).then((user) => {
+    if (user) {
+      console.log("user was successfully created: ", user);
+      const token = generateJWT({ id: user.id, role: user.role });
+      res.json(token);
+    } else {
+      res.send("Unable to create account");
+    }
+  });
+});
+
+app.post("/login", cors(corsOptions), (req, res) => {
+  const user = db.checkLogin;
+  if (user) {
+    const token = generateJWT({ id: user.id, role: user.role });
+    res.json(token);
+  } else {
+    res.send("Username or password incorrect");
+  }
+});
 
 // ----------------------- UPDATE REQUESTS -------------------------
 

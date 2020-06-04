@@ -35,7 +35,7 @@ const checkUsernameExistence = (request, response) => {
       }
     })
     .catch((error) => {
-      console.log("An error occurred: ", error);
+      console.log("checkusernameexistence An error occurred: ", error);
       response.status(500).json(error);
     });
 };
@@ -55,7 +55,7 @@ const getUserProfile = (request, response) => {
       response.json(data);
     })
     .catch((error) => {
-      console.log("An error occurred: ", error);
+      console.log("getuserprofile An error occurred: ", error);
       response.status(500).json(error);
     });
 };
@@ -96,30 +96,7 @@ const checkEmailAvailable = (request, response) => {
       }
     })
     .catch((error) => {
-      console.log("An error occurred: ", error);
-      response.status(500).json(error);
-    });
-};
-
-/*
-returns true/false if the password and username match
-TODO: update security on this
-*/
-const checkLogin = (request, response) => {
-  console.log(request.params);
-  db.oneOrNone("select id from users where username = $1 and password = $2", [
-    request.params.username,
-    request.params.password,
-  ])
-    .then((data) => {
-      if (data) {
-        response.json("true");
-      } else {
-        response.json("false");
-      }
-    })
-    .catch((error) => {
-      console.log("An error occurred: ", error);
+      console.log("checkemailavailable An error occurred: ", error);
       response.status(500).json(error);
     });
 };
@@ -131,36 +108,62 @@ Create a new user in the DB
 Also creates a corresponding row in the profiles table
 */
 const createUser = (request, response) => {
-  db.tx((t) => {
-    return t
-      .one(
-        "insert into users (username, password, email, admin, datecreated) values (lower($1),$2,lower($3),$4,$5) returning id",
-        [
-          request.body.username,
-          request.body.password,
-          request.body.email,
-          request.body.admin,
-          new Date(),
-        ]
-      )
-      .then((user) => {
-        return t.none(
-          "insert into profiles (id, description, avatar, location, showdatecreated, namechanges) values ($1,$2,$3,$4,$5,$6)",
-          [user.id, "", "", "", true, 0]
-        );
-      });
-  })
-    .then(() => {
-      //response.sendStatus(200);
-      response.status(200);
-      response.json(request.body.username.toLowerCase());
+  return new Promise((res, rej) => {
+    db.tx((t) => {
+      return t
+        .one(
+          "insert into users (username, password, email, admin, datecreated) values (lower($1),$2,lower($3),$4,$5) returning id, admin",
+          [
+            request.body.username,
+            request.body.password,
+            request.body.email,
+            request.body.admin,
+            new Date(),
+          ]
+        )
+        .then((user) => {
+          return t.one(
+            "insert into profiles (id, description, avatar, location, showdatecreated, namechanges) values ($1,$2,$3,$4,$5,$6) returning id",
+            [user.id, "", "", "", true, 0]
+          );
+        });
     })
-    .catch((error) => {
-      console.log("there was an error: ", error);
-      response.status(500).json(error);
-    });
+      .then((userData) => {
+        //return the user id (might change to username later) and role
+        console.log("user data? ", userData);
+        // return { id: userData.id, role: request.body.admin };
+        res({ id: userData.id, role: request.body.admin });
+      })
+      .catch((error) => {
+        console.log("createuser there was an error: ", error);
+        return;
+        // response.status(500).json(error);
+      });
+  });
   //.finally(db.$pool.end);
   //response.send(request.body.username);
+};
+
+/*
+returns user info for JWT if the password and username match
+TODO: update security on this
+*/
+const checkLogin = (request, response) => {
+  console.log(request.params);
+  db.oneOrNone(
+    "select id, admin from users where username = $1 and password = $2",
+    [request.body.username, request.body.password]
+  )
+    .then((data) => {
+      return {
+        id: data.id,
+        role: data.admin,
+      };
+    })
+    .catch((error) => {
+      console.log("checklogin An error occurred: ", error);
+      response.status(500).json(error);
+    });
 };
 
 // ----------------------- UPDATE REQUESTS ------------------------------

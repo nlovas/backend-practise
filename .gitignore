@@ -5,8 +5,10 @@
 !.vscode/extensions.json
 *.code-workspace
 api/config.js
+api/.env
 api/node_modules
 website/node_modules
 database.md
 website/.next/*
+
 

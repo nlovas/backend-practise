@@ -35,9 +35,9 @@ class Login extends React.Component {
     console.log("username and pw? ", username, password);
     return new Promise((resolve, reject) => {
       axios({
-        method: "get",
+        method: "post",
         url: "http://localhost:8080/login",
-        params: {
+        data: {
           username: username,
           password: password,
         },

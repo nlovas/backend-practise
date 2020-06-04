@@ -27,7 +27,7 @@ class Signup extends React.Component {
           }).then((result) => {
             if (result.status === 200) {
               console.log("account creation successful");
-              this.props.router.push("/user/" + result.data);
+              // this.props.router.push("/user/" + result.data);
             } else {
               //TODO: show the user an error message
             }

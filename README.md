@@ -15,7 +15,7 @@ This website acts as a social media for cosplayers! Users can show off their cos
 
 ### Back End
 
-[Postgres](https://www.postgresql.org/) | [Express](https://expressjs.com/) (Node) | [pg-promise](https://github.com/vitaly-t/pg-promise) | Nodemon | JSON Web Tokens | env-cmd
+[Postgres](https://www.postgresql.org/) | [Express](https://expressjs.com/) (Node) | [pg-promise](https://github.com/vitaly-t/pg-promise) | Nodemon | JSON Web Tokens | Env-cmd | Bcrypt
 
 ### Testing
 
@@ -53,9 +53,11 @@ To run the tests, go to /website and use the command `npm run test`
 - [Client-side vs. Server-side vs. Pre-rendering for Web Apps](https://www.toptal.com/front-end/client-side-vs-server-side-pre-rendering)
 - [Google Material Icons](https://material.io/resources/icons/?style=baseline)
 - [Favicon Generator](https://realfavicongenerator.net/)
+- [Session vs Token Based Authentication](https://medium.com/@sherryhsu/session-vs-token-based-authentication-11a6c5ac45e4)
 - [JWT Authentication & Authorization in NodeJs/Express & MongoDB REST APIs(2019)](https://medium.com/swlh/jwt-authentication-authorization-in-nodejs-express-mongodb-rest-apis-2019-ad14ec818122)
+- [JSON Web Tokens (JWTs) in Express.js](https://www.digitalocean.com/community/tutorials/nodejs-jwt-expressjs) -[Authentication and Authorization with JWTs in Express.js](https://stackabuse.com/authentication-and-authorization-with-jwts-in-express-js/)
 
 ### Misc Notes:
 
 - In Windows, local Postgresql can be started/stopped under "Services" in the task manager.
-- Postgres config has been gitignore'd for privacy reasons
+- Postgres config and my .env have been gitignore'd for privacy reasons
